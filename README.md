@@ -11,6 +11,7 @@ TXT·CSV 입출력과 인코딩, 기구학 FK·IK·MK, 궤적 계획(등속·CUB
 
 | 경로 | 내용 |
 |---|---|
+| `실전공식_CheatKey.docx` | 00 실전 공식 종합을 A4 가로 5쪽 2단 치트키로 정리한 Word 파일 — 공식 블록마다 설명 그래프 11개가 바로 아래에 들어 있음 (위 점 표기는 dθ·ddθ·Jdot 같은 코드 변수명) |
 | `robot_sw_exam.html` | 완성본. 더블클릭하면 브라우저에서 열림 |
 | `src/template.html` | 페이지 원본. 글·표·실습판(JS)을 여기서 고침 |
 | `src/snip/*.py` | 페이지에 들어가는 예제 코드. 각각 단독 실행 가능 |
@@ -18,6 +19,7 @@ TXT·CSV 입출력과 인코딩, 기구학 FK·IK·MK, 궤적 계획(등속·CUB
 | `src/problems/` | 예상 문제 입력 파일과 출력 결과(`*_expected.txt`) |
 | `src/img/` | 페이지에 넣는 그림 (sample_data 차트 캡처) |
 | `sample_data/` | 엑셀 차트 샘플과 원본 TXT·CSV (09 단원 자료) |
+| `tools/gen_real_summary_figs.py` | 11 실전 문제 · 00 실전 공식 종합의 설명 그림(SVG) 11개를 `src/problems/real_sum_*.html` 로 만듦 (실전 문제 출력 파일 값으로 그림) |
 | `tools/check_solutions.py` | 모범 답안을 모두 실행해 출력 결과 파일을 다시 만듦 |
 | `build.py` | 원본 + 예제 코드 → 완성본 생성 |
 | `dist/artifact_body.html` | 아티팩트 게시용 본문 (빌드 결과) |
@@ -38,7 +40,7 @@ TXT·CSV 입출력과 인코딩, 기구학 FK·IK·MK, 궤적 계획(등속·CUB
 
 | 단원 | 항목 |
 |---|---|
-| 01 함수 설명 & 파일 처리 | 1-1 사용 함수, 1-2 TXT, 1-3 CSV, 1-4 인코딩 |
+| 01 함수 설명 & 파일 처리 | 1-1 사용 함수, 1-2 TXT, 1-3 CSV, 1-4 인코딩, 1-5 주요 공식(평면 위치 일반식, DH 파라미터, J·J̇ 유도) |
 | 02 기구학 | 2-1 FK, 2-2 IK, 2-3 MK |
 | 03 궤적 계획 | 3-1 등속·CUBIC, 3-2 LSPB·BBPB, 3-3 RRT* |
 | 04 경로 탐색 | 4-1 Dijkstra, 4-2 A*, 4-3 Floyd-Warshall |
@@ -48,7 +50,8 @@ TXT·CSV 입출력과 인코딩, 기구학 FK·IK·MK, 궤적 계획(등속·CUB
 | 08 위치 추정·지도 | 8-1 파티클 필터, 8-2 점유 격자 지도 |
 | 09 Prerequisite Notice List | 제출 전 점검 목록 |
 | 10 엑셀로 차트 그리기 | 10-1 관절 위치 차트, 10-2 A* 경로 + Block 차트 (sample_data 엑셀 파일 기준) |
-| 11 실전 문제 | 01. 2 Link FK |
+| 11 실전 문제 | 00. 실전 공식 종합, 01. 2 Link FK, 02. 2 Link IK, 03. 2 Link IK by 뉴톤-랩슨, 04. 3 Link IK - 뉴톤-랩슨, 05. 2 LINK MK (Motion), 06. CUBIC 궤적 계획, 07. LSPB 궤적 계획, 08. BBPB 궤적 계획, 09. A_star 경로 탐색, 10. Dijkstra 경로 계획, 11. PID 제어, 12. PD + 중력 보상, 13. Computed-Torque 제어, 14. 동역학 · Computed-Torque (번호·하위 메뉴는 build.py가 자동으로 붙임) |
+| 12 Cheat Key | 문제 유형 판별표, 공통 규칙, 기구학 01~05, 궤적 06~08(비교표), 경로 09~10, 제어·동역학 11~14, 제출 전 체크 — `실전공식_CheatKey_v2.docx` 와 같은 내용 + 설명 그림 11개 |
 
 예상 문제 파일 이름 `q<단원><항목>_<번호>`는 처음 만들 때의 번호를 그대로 씁니다. 예: `q22_1` = 2-2 IK 예상 문제 1, `q52_1` = 6-1 동역학 예상 문제 1, `q53_1` = 5-2 PD+G, `q54_1` = 5-3 CTC, `q61_1` = 7-1 CAN, `q91_1` = 10-1 관절 위치 차트. 각 문제의 상세 설명은 `src/problems/<문제>_explain.html`.
 
@@ -56,7 +59,7 @@ TXT·CSV 입출력과 인코딩, 기구학 FK·IK·MK, 궤적 계획(등속·CUB
 
 | 단원 | 파일 |
 |---|---|
-| 01 함수 설명 & 파일 처리 | func_demo.py, io_template.py, csv_module.py, csv_pandas.py, csv_numpy.py, encoding_demo.py, read_auto.py |
+| 01 함수 설명 & 파일 처리 | func_demo.py, io_template.py, csv_module.py, csv_pandas.py, csv_numpy.py, encoding_demo.py, read_auto.py, planar_dh_check.py, jacobian_check.py |
 | 02 기구학 | fk2.py, ik2.py, ik_newton.py, ik3_dh.py, mk.py |
 | 03 궤적 계획 | cubic.py, lspb.py, bbpb.py, rrtstar.py |
 | 04 경로 탐색 | astar.py, dijkstra.py(① source만), dijkstra_target.py(② source + target), floyd.py |
@@ -126,3 +129,36 @@ TXT·CSV 입출력과 인코딩, 기구학 FK·IK·MK, 궤적 계획(등속·CUB
 - 2026-10-13 v58 실전 01 입력 데이터를 30 45 / 45 60 / 60 90 (자세 3개)로 변경 — 출력·화면 출력·손 계산·엑셀 예시(H1:I9, 축 −0.5~1.5)·차트 그림 갱신
 - 2026-10-13 v59 왼쪽 메뉴 11 실전 문제 아래 하위 메뉴 "01. 2 Link FK" 추가(클릭 시 이동, 보는 위치 강조) · 실전 01 차트 만드는 방법을 사용자 PPT(FK_2Link.pptx) 기준 S1~S9로 다시 작성(데이터 → 텍스트/CSV에서 가져오기, 직선 및 표식 분산형, 데이터 선택 → 추가, 계열 Theta_30_45 등 떨어진 셀 X/Y), 캡처 9장, 예시 엑셀도 같은 방식으로 변경, 보조 표 방식 삭제
 - 2026-10-13 v60 실전 01 차트 만드는 방법에 S10 최종 그래프(사용자 엑셀 캡처, 데이터 레이블 X·Y 값) 추가
+- 2026-10-13 v61 실전 01 코드: 입력 읽기 encoding="utf-8-sig"(BOM 대비), round(v, 4) + 0.0으로 -0.0000 방지, 코드 포인트에 설명 3줄 추가(출력 결과 동일)
+- 2026-10-14 v62 실전 01 차트 그림을 사용자 엑셀 캡처(FK 2 LINK, 데이터 레이블)로 교체 — 맨 위 완성 차트와 S10 모두, real01_chart.png 삭제
+- 2026-10-14 v63 4-2 A* 프로그램 CODE를 사용자 코드(7×7 격자, start (0,0) → goal (6,4), 벽 모서리 통과 금지 ON/OFF 스위치 NO_CORNER_CUT, Block·Grid·Path TXT 3개 저장)로 교체 · 주석 추가 · ON/OFF 화면 출력과 TXT 결과 · ON/OFF 경로 비교 그림 · 코드 포인트 · 주의 내용 1줄 보강
+- 2026-10-14 v64 11 실전 문제에 02. A_star 경로 탐색 추가(하위 메뉴 포함) — 사용자 A* 코드 스타일, Astar_input.txt 8×8 격자 읽기, start (0,0) → goal (7,7), NO_CORNER_CUT ON/OFF, Astar_block.txt·Astar_path.txt 출력, ON/OFF 경로 그림, 엑셀 경로 + Block 차트 S1~S6, sample_data/real02_astar.xlsx, tools/make_real02_xlsx.py · gen_astar_graph.py에 격자 파일 인자 추가
+- 2026-10-14 v65 실전 02 문제 설명 끝에 "또한, A* 알고리즘으로 찾은 최단 경로를 그래프로 표현하시오." 추가
+- 2026-10-14 v66 실전 02 입력 파일 이름 Astar_input.txt → Astar_grid.txt (코드 Input_path_filename, 문제 설명, 파일 제목)
+- 2026-10-14 v67 변수 이름 NO_CORNER_CUT → NO_WALL_CORNER (인자 no_corner_cut → no_wall_corner) — 4-2 A* 코드, 실전 02 코드, 설명·그림·엑셀 차트 제목 모두 변경(실행 결과 동일)
+- 2026-10-15 v68 2-2 IK에 사용자 Word 노트(2링크 IK 유도) 반영 — 상세 내용 맨 앞에 β·ψ 방법(그림, 기호 표, 1단계 θ₂ / 2단계 θ₁, 필기 노트 정정 표, 최종 공식, 손 계산, 검증 표), 요약에 θ₁ = β ∓ ψ 식, 주의 내용에 ψ 부호, 프로그램 CODE에 ik2_beta_psi.py + 실행 결과
+- 2026-10-15 v69 11 실전 문제에 02. 2 Link IK 추가(L1 = 1.0, L2 = 0.5, 실전 01 말단 위치를 목표점으로 두 해 계산, output_data.txt·output_pos.txt, FK 검산, 엑셀 down/up 자세 차트) · A_star 경로 탐색은 03으로 번호 변경(파일 real02_* → real03_*)
+- 2026-10-15 v70 11 실전 문제에 03. 3 Link IK - 뉴톤-랩슨 추가(numpy만, L1 1.0 · L2 0.8 · L3 0.5, 목표 Px Py φ 4개, 연속법 초기값, output_data/iter/pos.txt, 손목점 해석법 검산, 엑셀 자세 차트), A_star는 04 · 실전 문제 번호·바로가기·하위 메뉴 자동화(build.py number_real, 템플릿에 {{rno}} / {{rno:키}}, article id r-키) · 실전 파일 이름에서 번호 제거(real01_ → real_fk2_, real02_ → real_ik2_, real03_ → real_astar_)
+- 2026-10-15 v71 11 실전 문제에 04. CUBIC · 05. LSPB · 06. BBPB 궤적 계획 추가(관절 2개, dt = 0.1 s, coef/param_data.txt + output_data.txt, 공식·검산, 엑셀 위치·속도·가속도 차트 3개, tools/make_real_traj_xlsx.py) · A_star는 자동으로 07
+- 2026-10-15 v72 11 실전 문제에 08. Dijkstra 경로 계획 추가(node_data·edge_data 입력, 비용 = 직선거리, dist/path/edge_xy 출력, 결과 그래프 그림, 엑셀 연결선·노드·경로 차트 S1~S6, tools/gen_dijkstra_graph.py · make_real_dijkstra_xlsx.py)
+- 2026-10-15 v73 11 실전 문제에 PID 제어 · PD + 중력 보상 · Computed-Torque 제어 · 동역학 · Computed-Torque(2링크 수직 로봇 공통 M, C, G) 와 MK(동기구학: 선속도 · 역속도 · 가속도 · 특이점, 04번 위치) 추가 — 시뮬레이션·역동역학 결과 파일, 공식·검산, 엑셀 차트(tools/make_real_series_xlsx.py, make_real_mk_xlsx.py). 번호는 자동으로 01~13
+- 2026-10-15 v74 실전 04 제목 "MK(Motion Kinematics, 동기구학)" → "2 LINK MK (Motion)"
+- 2026-10-15 v75 왼쪽 메뉴 실전 문제 하위 메뉴 줄 간격 절반으로 (padding 4px → 2px, gap 1px → 0, 모바일은 그대로)
+- 2026-10-15 v76 왼쪽 큰 메뉴(00~11) 줄 간격 70 %로 (padding 6px → 4px, line-height 1.45, 항목 간 39px → 32px)
+- 2026-10-16 v77 00 시험 개요 카드 "약 4시간 / 100점 만점" → "5시간 / 시험 시간"
+- 2026-10-18 v78 01 함수 설명 & 파일 처리에 1-5 주요 공식 추가 — 자코비안 J(v = J·θ̇)와 J̇(a = J·θ̈ + J̇·θ̇)의 수식·유도(연쇄법칙, 곱의 미분, 2링크 전개, 숫자 확인), 예제 코드 jacobian_check.py(수치 미분 검증) + 실행 결과
+- 2026-10-18 v79 1-5 주요 공식에 평면 n링크 위치 일반식(누적각 Θ, 점화식, 링크 수별 식, 거리 d와 θ₂, 일반 자코비안 열)과 DH 파라미터(4개 값 표, A = Rz·Tz·Tx·Rx 유도, 평면에서 일반식과 같아짐, 표 만드는 순서) 추가, 예제 코드 planar_dh_check.py(일반식 = DH 곱, 일반 자코비안 검증) + 실행 결과
+- 2026-10-18 v80 11 실전 문제 하위 메뉴 맨 위에 「00. 실전 공식 종합」 추가 — 01~13 문제의 공식을 한눈에 보기 표, 공통 규칙, 기구학·궤적·경로·제어/동역학 공식, CUBIC/LSPB/BBPB 비교표로 요약, build.py number_real이 id r-summary를 00으로 번호 매김(나머지는 01~13 유지)
+- 2026-10-18 v81 11 실전 문제에 03. 2 Link IK by 뉴톤-랩슨 추가(02번과 같은 입력, numpy만 사용, θ₂ 부호가 다른 초기값 두 개로 elbow-down/up 두 해, 직전 해를 초기값으로 쓰는 연속법, output_data/iter/pos.txt, 손 계산 첫 반복, 해석법과 비교표, 코드 real_ik2_nr.py) · 이후 문제 번호는 자동으로 04~14로 이동 · 00 실전 공식 종합을 14개 문제 기준으로 갱신(표 행·공식 추가)
+- 2026-10-18 v82 00 실전 공식 종합에 설명 그림 11개 추가 — 2 Link FK 기하, 2 Link IK(두 해, β·ψ), 뉴턴-랩슨(접선 반복·오차 감소), MK(관절별 기여·특이점), CUBIC/LSPB/BBPB 비교, A*(f = g + h, 벽 모서리), Dijkstra 갱신, PID, PD vs PD+G, CTC 감쇠비, 토크 구성 · tools/gen_real_summary_figs.py (라이트/다크 테마 모두 대응)
+- 2026-10-18 v83 실전공식_CheatKey.docx 추가 — 00 실전 공식 종합(01~14)을 A4 가로 2쪽 4단 치트키로 정리 (공통 규칙, 기구학, 궤적 비교표, 경로, 제어·동역학, 제출 전 체크)
+- 2026-10-18 v84 실전공식_CheatKey.docx에 설명 그래프 11개를 각 공식 블록 아래에 삽입(2쪽 → 5쪽), 표는 한 단에 붙도록 정리 · 00 종합의 A* 그림 아래쪽 설명이 잘리던 것 수정(높이 380 → 410)
+- 2026-10-18 v85 뉴턴-랩슨 종료 기준을 값까지 명기 — 00 실전 공식 종합(웹)과 실전공식_CheatKey_v2.docx의 03·04번에 「‖f‖ < tol = 1e-6, 최대 반복 50, |det J| < 1e-9 이면 중단」 추가 (실전 코드 TOL, MAX_ITER 값과 같음). 기존 실전공식_CheatKey.docx 가 Word 에서 열려 있어 새 이름(_v2)으로 저장
+- 2026-10-18 v86 6-1 동역학 상세 내용 맨 앞에 「쉽게 먼저 이해하기」 추가(고등학생 눈높이) — 세 항(M·C·G)을 카트·줄에 매단 공·가방 그림으로 설명, 슬라이더 실습판(자세·속도·가속에 따라 M·C·G·τ 막대가 변함, 실전 14번과 같은 로봇), 식 외우는 법(M은 α·β·δ 3개, C는 h 하나, G는 무게×cos), 숫자 확인 · src/problems/dyn_easy_analogy.html, dyn_easy_lab.html
+- 2026-10-18 v87 CheatKey 문서 맨 앞에 「문제 유형 판별표」 추가 — 입력·출력으로 유형 고르는 표(FK~동역학 12행), 궤적 3종(LSPB·BBPB·CUBIC)과 동역학(역·순동역학·정지·t=0) 가르는 법, 공통 계산 순서 (문서는 6쪽)
+- 2026-10-18 v88 CheatKey 문서의 동역학 가르기를 표로 교체 — 「4단계 · 동역학은 무엇이 주어졌나로 가르기」(문제 문장 · 해석 · 계산 5행: 역동역학, 순동역학, 중력만, C = 0, PD 계열) · 표 마지막 행에서 같은 쪽 묶음을 끊어 쪽 나눔 정리
+- 2026-10-18 v89 왼쪽 메뉴에 「12 Cheat Key」 추가(진도 표시 /12) — 실전공식_CheatKey_v2.docx 내용을 웹 섹션으로 정리: 문제 유형 판별표·궤적/동역학 가르기, 공통 규칙, 01~14 공식 카드와 설명 그림, 제출 전 체크. build.py가 Cheat Key 쪽 SVG marker id에 ck_ 접두어를 붙여 00 종합과 겹치지 않게 함
+- 2026-10-18 v90 00 실전 공식 종합 2번 항목(공통 규칙)에 근의 공식 추가 — ax² + bx + c = 0 의 근, 판별식 D 에 따른 의미 표(D > 0, = 0, < 0), 사용처 식과 숫자 예(LSPB tb, CTC 특성방정식, PID 대상)
+- 2026-10-18 v91 6-1 동역학 「M, C, G 구하는 방법」 아래에 상세 설명 추가(접이식) — K = ½θ̇ᵀMθ̇ 에서 M 읽는 법: 이동+회전 에너지, v_c 를 θ̇ 로, 전개해 a², ab, b² 모으기, 계수 비교로 M₁₁·M₁₂·M₂₂, 숫자 확인(1.6733), 라그랑주로 M·θ̈ 가 나오는 이유
+- 2026-10-18 v92 6-1 동역학 상세 설명(K 에서 M 읽는 법)의 2단계를 단계별 유도로 확장 — v_c2² 를 2-1 준비(연쇄법칙·합각의 미분) → 2-2 ẋ, ẏ → 2-3 A, B 치환 → 2-4 제곱 → 2-5 더하기와 삼각 공식(sin²+cos² = 1, cos(a−b)) → 2-6 결과, 벡터 합 그림 설명, 숫자 확인 2개, 자주 하는 실수
+- 2026-10-18 v93 왼쪽 메뉴(목차) 목록을 따로 스크롤 — 메뉴 높이를 화면에 맞추고(제목·진도 표시는 고정) 목록만 스크롤, 보고 있는 항목이 목록 안에 보이도록 자동으로 따라감, 좁은 화면(가로 메뉴)은 기존 방식 유지
