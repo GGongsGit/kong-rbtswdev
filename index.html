@@ -129,13 +129,19 @@ section{display:flex;flex-direction:column;gap:22px;scroll-margin-top:20px}
 .ck-mcg .mcg-h,.ck-mcg .mcg-k{text-align:center;font-family:var(--f-display);font-weight:700}
 .ck-mcg .mcg-k{font-size:1.15rem;width:2.6em}
 .ck-mcg svg{display:block;margin:0 auto}
-.mcg-f{font-family:var(--f-mono);font-size:.82rem;line-height:1.8;white-space:pre;margin:2px 0}
+.mcg-f{font-family:var(--f-mono);font-size:.82rem;line-height:1.8;white-space:pre-wrap;overflow-wrap:anywhere;margin:2px 0}
+.ck-mcg{table-layout:fixed}
+.ck-mcg td{overflow-wrap:anywhere}
+.ck-mcg svg{max-width:100%;height:auto}
 .mcg-d{color:var(--plot-a);font-weight:700}
 .mcg-hl{color:var(--warn);font-weight:700}
 .mcg-n{font-family:var(--f-body);font-size:.74rem;color:var(--muted)}
 table.mcg-mini{margin-top:6px;font-size:.74rem;border:1px solid var(--line)}
 table.mcg-mini th,table.mcg-mini td{padding:2px 6px;line-height:1.35;vertical-align:middle}
-table.mcg-mini .mono{white-space:nowrap;font-size:.95em}
+table.mcg-mini{table-layout:auto;width:100%}
+table.mcg-mini .mono{font-size:.95em}
+table.mcg-mini td{overflow-wrap:normal}
+.mcg-f{overflow-wrap:normal}
 .ck-card h4 .ck-use{font-family:var(--f-body);font-size:.78rem;font-weight:500;color:var(--muted);margin-left:6px}
 .ck-card .formula{margin:6px 0;font-size:.84rem;padding:10px 12px;line-height:1.75}
 .ck-card .iofile{margin-top:8px}
@@ -9287,8 +9293,8 @@ Ki = 0 정상상태 : y_ss = Kp·r/(k+Kp),  ess = r − y_ss</div>
 
 <table class="mcg-mini"><thead><tr><th>성분</th><th>m<sub>2</sub> 부분</th><th>벡터로</th><th>뜻</th></tr></thead><tbody>
 <tr><td>M<sub>22</sub></td><td class="mono">Lc<sub>2</sub>²</td><td class="mono">b·b</td><td>관절2 거리²</td></tr>
-<tr><td>M<sub>12</sub></td><td class="mono">Lc<sub>2</sub>²+L<sub>1</sub>·Lc<sub>2</sub>·cosθ<sub>2</sub></td><td class="mono">b·(a+b)</td><td>관절2 거리×관절1 거리(방향 고려)</td></tr>
-<tr><td>M<sub>11</sub></td><td class="mono">L<sub>1</sub>²+Lc<sub>2</sub>²+2·L<sub>1</sub>·Lc<sub>2</sub>·cosθ<sub>2</sub></td><td class="mono">(a+b)·(a+b)</td><td>관절1 거리²</td></tr>
+<tr><td>M<sub>12</sub></td><td class="mono">Lc<sub>2</sub>²<wbr>+L<sub>1</sub>·Lc<sub>2</sub>·cosθ<sub>2</sub></td><td class="mono">b·(a+b)</td><td>관절2 거리×<wbr>관절1 거리(방향 고려)</td></tr>
+<tr><td>M<sub>11</sub></td><td class="mono">L<sub>1</sub>²+Lc<sub>2</sub>²<wbr>+2·L<sub>1</sub>·Lc<sub>2</sub>·cosθ<sub>2</sub></td><td class="mono">(a+b)·<wbr>(a+b)</td><td>관절1 거리²</td></tr>
 </tbody></table>
 <table class="mcg-mini"><tbody>
 <tr><td>M<sub>11</sub></td><td>관절 1을 돌릴 때 <b>관절 1 자신</b>이 느끼는 무게</td></tr>
@@ -9299,17 +9305,24 @@ Ki = 0 정상상태 : y_ss = Kp·r/(k+Kp),  ess = r − y_ss</div>
 <td><div class="mcg-f">M = I + m·Lc²
 I = (1/12)·m·L²
 ∴ M = (1/12)·m·L² + m·Lc²
-    = (1/3)·m·L²  (Lc = L/2)</div>자세와 상관없는 상수</td>
-<td><div class="mcg-f">M = [[ M<sub>11</sub>, M<sub>12</sub> ], [ M<sub>21</sub>, M<sub>22</sub> ]],  M<sub>21</sub> = M<sub>12</sub>
-I<sub>1</sub> = (1/12)·m<sub>1</sub>·L<sub>1</sub>²,  I<sub>2</sub> = (1/12)·m<sub>2</sub>·L<sub>2</sub>²
-M<sub>11</sub> = I<sub>1</sub> + m<sub>1</sub>·Lc<sub>1</sub>² + I<sub>2</sub> + m<sub>2</sub>·<span class="mcg-d">D</span>²   <span class="mcg-n">(각 링크의 무게중심에서 회전축까지의 거리)</span>
-    = I<sub>1</sub> + I<sub>2</sub> + m<sub>1</sub>·Lc<sub>1</sub>² + m<sub>2</sub>·(L<sub>1</sub>² + Lc<sub>2</sub>² + 2·L<sub>1</sub>·Lc<sub>2</sub>·cos θ<sub>2</sub>)
+    = (1/3)·m·L²
+      (Lc = L/2)</div>자세와 상관없는 상수</td>
+<td><div class="mcg-f">M = [[ M<sub>11</sub>, M<sub>12</sub> ], [ M<sub>21</sub>, M<sub>22</sub> ]]
+M<sub>21</sub> = M<sub>12</sub>
+I<sub>1</sub> = (1/12)·m<sub>1</sub>·L<sub>1</sub>²
+I<sub>2</sub> = (1/12)·m<sub>2</sub>·L<sub>2</sub>²
+M<sub>11</sub> = I<sub>1</sub> + m<sub>1</sub>·Lc<sub>1</sub>² + I<sub>2</sub> + m<sub>2</sub>·<span class="mcg-d">D</span>²
+      <span class="mcg-n">(D : 2번 링크 무게중심에서 회전축까지의 거리)</span>
+    = I<sub>1</sub> + I<sub>2</sub> + m<sub>1</sub>·Lc<sub>1</sub>²
+      + m<sub>2</sub>·(L<sub>1</sub>² + Lc<sub>2</sub>²
+            + 2·L<sub>1</sub>·Lc<sub>2</sub>·cos θ<sub>2</sub>)
 M<sub>22</sub> = I<sub>2</sub> + m<sub>2</sub>·Lc<sub>2</sub>²
 M<sub>12</sub> = I<sub>2</sub> + m<sub>2</sub>·Lc<sub>2</sub>² + <span class="mcg-hl">m<sub>2</sub>·L<sub>1</sub>·Lc<sub>2</sub>·cos θ<sub>2</sub></span></div></td></tr>
 <tr><td class="mcg-k">G</td><td><b>중력 항</b><br>팔을 들고 있는 데 드는 토크<br>θ = 0일 때 링크가 수평이면 cos, 수직이면 sin</td>
 <td>θ = 0 일 때 수평이므로<div class="mcg-f">∴ G = m·g·Lc·cos θ</div></td>
 <td><div class="mcg-f">G = [ G<sub>1</sub>, G<sub>2</sub> ]
-G<sub>1</sub> = (m<sub>1</sub>·Lc<sub>1</sub> + m<sub>2</sub>·L<sub>1</sub>)·g·cos θ<sub>1</sub> + m<sub>2</sub>·Lc<sub>2</sub>·g·cos(θ<sub>1</sub> + θ<sub>2</sub>)
+G<sub>1</sub> = (m<sub>1</sub>·Lc<sub>1</sub> + m<sub>2</sub>·L<sub>1</sub>)·g·cos θ<sub>1</sub>
+     + m<sub>2</sub>·Lc<sub>2</sub>·g·cos(θ<sub>1</sub> + θ<sub>2</sub>)
 G<sub>2</sub> = m<sub>2</sub>·Lc<sub>2</sub>·g·cos(θ<sub>1</sub> + θ<sub>2</sub>)</div></td></tr>
 <tr><td class="mcg-k">C</td><td><b>코리올리·원심력 항</b><br>다른 관절의 회전 때문에 생기는 힘</td>
 <td>관절이 1개이므로<div class="mcg-f">∴ C = 0</div></td>
@@ -9317,7 +9330,8 @@ G<sub>2</sub> = m<sub>2</sub>·Lc<sub>2</sub>·g·cos(θ<sub>1</sub> + θ<sub>2<
 C = [ −h·<span class="ov1 tall">θ</span><sub>2</sub>·(2<span class="ov1 tall">θ</span><sub>1</sub> + <span class="ov1 tall">θ</span><sub>2</sub>) ;  h·<span class="ov1 tall">θ</span><sub>1</sub>² ]</div>멈춰 있으면(<span class="ov1 tall">θ</span> = 0) C = 0</td></tr>
 <tr><td class="mcg-k">τ</td><td><b>토크 공식</b><br>M, C, G 를 합친 관절 토크<div class="mcg-f">τ = M·<span class="ov2 tall">θ</span> + C + G</div></td>
 <td><div class="mcg-f">τ = M·<span class="ov2 tall">θ</span> + G   (C = 0)
-  = (I + m·Lc²)·<span class="ov2 tall">θ</span> + m·g·Lc·cos θ</div></td>
+  = (I + m·Lc²)·<span class="ov2 tall">θ</span>
+    + m·g·Lc·cos θ</div></td>
 <td><div class="mcg-f">[ τ<sub>1</sub> ; τ<sub>2</sub> ] = M·[ <span class="ov2 tall">θ</span><sub>1</sub> ; <span class="ov2 tall">θ</span><sub>2</sub> ] + C + G
 τ<sub>1</sub> = M<sub>11</sub>·<span class="ov2 tall">θ</span><sub>1</sub> + M<sub>12</sub>·<span class="ov2 tall">θ</span><sub>2</sub> + C<sub>1</sub> + G<sub>1</sub>
 τ<sub>2</sub> = M<sub>12</sub>·<span class="ov2 tall">θ</span><sub>1</sub> + M<sub>22</sub>·<span class="ov2 tall">θ</span><sub>2</sub> + C<sub>2</sub> + G<sub>2</sub></div></td></tr>
