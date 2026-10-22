@@ -8,13 +8,13 @@
 <title>로봇SW개발기사 실기 노트</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans+KR:wght@500;600;700&family=Noto+Sans+KR:wght@400;500;700&family=JetBrains+Mono:wght@400;600&family=Nanum+Gothic+Coding&display=swap">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans+KR:wght@500;600;700&family=Noto+Sans+KR:wght@400;500;700;900&family=JetBrains+Mono:wght@400;600&family=Nanum+Gothic+Coding&display=swap">
 <style>
 /* Layout: 티치 펜던트 + 모눈종이. 왼쪽 고정 목차(진도 체크) + 오른쪽 본문, 각 단원 = 개념 → 공식 → 직접 돌려보기 → 시험용 코드 → 주의 */
 :root{
   --bg:#eef2f1; --surface:#ffffff; --sunk:#e4eae8; --ink:#14212a; --muted:#566570;
   --line:#cfd8d6; --grid:rgba(20,33,42,.06);
-  --accent:#d9520b; --accent-ink:#a83e06; --accent-soft:#fde6d6; --hot:#b08900;
+  --accent:#d9520b; --accent-ink:#a83e06; --accent-soft:#fde6d6; --hot:#3f58d4; --navy:#5468c4;
   --teal:#0f7c72; --teal-soft:#d6efec; --warn:#b4231a; --warn-soft:#fbe1de;
   --code-bg:#17232b; --code-fg:#e3ecee; --code-kw:#ff9a57; --code-str:#9fd8b8; --code-num:#ffd479; --code-com:#7f949e; --code-fn:#8ccfff;
   --plot-q:#d9520b; --plot-v:#0f7c72; --plot-a:#5b5fc7;
@@ -25,14 +25,14 @@
 @media (prefers-color-scheme: dark){ :root:not([data-theme="light"]){
   --bg:#0e1518; --surface:#152025; --sunk:#1b282e; --ink:#e2eaec; --muted:#97a8ae;
   --line:#2a3a40; --grid:rgba(226,234,236,.05);
-  --accent:#ff8a3d; --accent-ink:#ffa86b; --accent-soft:#3a2416; --hot:#ffd84d;
+  --accent:#ff8a3d; --accent-ink:#ffa86b; --accent-soft:#3a2416; --hot:#ffd84d; --navy:#a9b8ff;
   --teal:#4fc7b9; --teal-soft:#123532; --warn:#ff7a6e; --warn-soft:#3a1c1a;
   --code-bg:#0a1013; --code-fg:#dfe8ea;
   --plot-q:#ff8a3d; --plot-v:#4fc7b9; --plot-a:#9ea2ff; color-scheme:dark }}
 :root[data-theme="dark"]{
   --bg:#0e1518; --surface:#152025; --sunk:#1b282e; --ink:#e2eaec; --muted:#97a8ae;
   --line:#2a3a40; --grid:rgba(226,234,236,.05);
-  --accent:#ff8a3d; --accent-ink:#ffa86b; --accent-soft:#3a2416; --hot:#ffd84d;
+  --accent:#ff8a3d; --accent-ink:#ffa86b; --accent-soft:#3a2416; --hot:#ffd84d; --navy:#a9b8ff;
   --teal:#4fc7b9; --teal-soft:#123532; --warn:#ff7a6e; --warn-soft:#3a1c1a;
   --code-bg:#0a1013; --code-fg:#dfe8ea;
   --plot-q:#ff8a3d; --plot-v:#4fc7b9; --plot-a:#9ea2ff; color-scheme:dark }
@@ -55,6 +55,9 @@ code{font-family:var(--f-mono);font-size:.88em;background:var(--sunk);padding:.1
 .brand{display:flex;flex-direction:column;gap:2px;padding-bottom:12px;border-bottom:2px solid var(--ink)}
 .brand b{font-family:var(--f-display);font-size:1.15rem}
 .progress{display:flex;align-items:center;gap:10px;font-size:.85rem;color:var(--muted)}
+:root[data-theme="light"]{color-scheme:light}
+.theme-btn{flex:none;font-family:var(--f-body);font-size:.78rem;padding:3px 10px;border:1px solid var(--line);border-radius:999px;background:var(--surface);color:var(--ink);cursor:pointer;white-space:nowrap}
+.theme-btn:hover{border-color:var(--accent)}
 .bar{flex:1;height:6px;background:var(--sunk);border-radius:3px;overflow:hidden}
 .bar i{display:block;height:100%;width:0;background:var(--accent);transition:width .3s}
 .toc ol{list-style:none;margin:0;padding:0;display:flex;flex-direction:column;gap:2px;counter-reset:t}
@@ -62,8 +65,8 @@ code{font-family:var(--f-mono);font-size:.88em;background:var(--sunk);padding:.1
 .toc a{display:flex;gap:10px;align-items:baseline;padding:4px 8px;line-height:1.45;border-radius:6px;text-decoration:none;color:var(--ink);font-size:.93rem}
 .h2sub{display:block;font-family:var(--f-body);font-size:.9rem;font-weight:500;color:var(--muted);margin-top:6px;line-height:1.5}
 .toc a:hover{background:var(--sunk)}
-.toc a.hot{font-weight:700;color:var(--hot)}
-.toc a.hot .n{color:var(--hot)}
+.toc a.hot{font-weight:900;color:var(--hot)}
+.toc a.hot .n{color:var(--hot);font-weight:700}
 .toc a .n{font-family:var(--f-mono);font-size:.75rem;color:var(--muted);width:1.6em;flex:none}
 .toc a.done .n{color:var(--teal)}
 .toc a.done .n::before{content:"✓"}
@@ -82,6 +85,7 @@ main{min-width:0;display:flex;flex-direction:column;gap:72px}
   background-size:22px 22px}
 .hero h1{font-size:clamp(1.9rem,4.6vw,2.9rem);font-weight:700;letter-spacing:-.01em}
 .hero h1 em{font-style:normal;color:var(--accent)}
+.hero h1 em.navy{color:var(--navy)}
 .hero .lede{max-width:62ch;color:var(--muted);font-size:1.03rem}
 .pipe{display:flex;flex-wrap:wrap;align-items:stretch;gap:0}
 .pipe div{flex:1 1 150px;min-width:0;padding:12px 14px;background:var(--bg);border:1px solid var(--line);display:flex;flex-direction:column;gap:2px}
@@ -304,10 +308,11 @@ figure.shot.wide img{max-width:100%}
 html{scroll-behavior:smooth}
 </style>
 
+<script>let t0="light";try{if(localStorage.getItem("rbsw-theme")==="dark")t0="dark"}catch(e){}document.documentElement.dataset.theme=t0;</script>
 <div class="shell">
 <nav class="toc" aria-label="목차">
   <div class="brand"><span class="label">Robot SW Engineer · 실기</span><b>로봇SW개발기사 실기 노트</b></div>
-  <div class="progress"><div class="bar"><i id="pbar"></i></div><span id="ptext" class="mono">0/12</span></div>
+  <div class="progress"><div class="bar"><i id="pbar"></i></div><span id="ptext" class="mono">0/12</span><button type="button" id="themeBtn" class="theme-btn"></button></div>
   <ol id="tocList">
     <li><a href="#overview"><span class="n"><span>00</span></span>시험 개요</a></li>
     <li><a href="#io" data-sec="io"><span class="n"><span>01</span></span>함수 설명 &amp; 파일 처리</a></li>
@@ -330,7 +335,7 @@ html{scroll-behavior:smooth}
 <!-- ================= HERO / OVERVIEW ================= -->
 <section id="overview" class="hero">
   <span class="label">로봇소프트웨어개발기사 · 실기 대비</span>
-  <h1>읽고, <em>계산하고</em>, 쓴다</h1>
+  <h1>읽고, <em>계산하고</em>, 쓰고, <em class="navy">그린다</em></h1>
   <p class="lede">실기 문제는 대부분 같은 틀입니다. INPUT용 TXT 파일을 수작업으로 생성 및 프로그램에서 읽어서 로봇 공식으로 계산하고, 요구한 형식 그대로 결과 파일을 TXT 파일로 저장합니다. 저장된 TXT 파일은 엑셀에서 읽어서 차트를 그리는데 사용합니다. 이 노트는 실습 폴더의 코드를 단원별로 정리했습니다.</p>
   <p class="lede">각 항목마다 <b>개념 → 주요 내용 요약 → 주의해야 될 내용 → 상세 내용 → 프로그램 CODE</b> 순서로 정리했고, 02 기구학부터는 <b>실기 시험 예상 문제 2개</b>를 붙였습니다. 예상 문제의 입력 파일은 <code>C:\KONG_2027Prg\RBTSW_Results\</code>에 있다고 가정하며, 모범 답안은 모두 실행해서 나온 출력 결과를 함께 실었습니다.</p>
   <div class="facts">
@@ -9475,6 +9480,13 @@ function refreshProgress(){
 secs.forEach(s=>{const cb=$("#done-"+s);if(!cb)return;cb.checked=store("rbsw-done-"+s)==="1";
   cb.addEventListener("change",()=>{store("rbsw-done-"+s,cb.checked?"1":"0");refreshProgress()})});
 refreshProgress();
+// 밝은 화면 ↔ 어두운 화면 스위치 (선택은 rbsw-theme 에 저장)
+const themeBtn=$("#themeBtn");
+const isDark=()=>{const t=document.documentElement.dataset.theme;if(t)return t==="dark";try{return matchMedia("(prefers-color-scheme: dark)").matches}catch(e){return false}};
+function paintThemeBtn(){const d=isDark();themeBtn.textContent=d?"☀ 밝은 화면":"☾ 어두운 화면";themeBtn.setAttribute("aria-label",d?"밝은 화면으로 바꾸기":"어두운 화면으로 바꾸기")}
+themeBtn.addEventListener("click",()=>{const t=isDark()?"light":"dark";document.documentElement.dataset.theme=t;store("rbsw-theme",t);paintThemeBtn()});
+try{matchMedia("(prefers-color-scheme: dark)").addEventListener("change",paintThemeBtn)}catch(e){}
+paintThemeBtn();
 // current section highlight
 const links=[...document.querySelectorAll(".toc a")];
 const tocList=document.getElementById("tocList");
