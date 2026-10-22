@@ -125,6 +125,18 @@ section{display:flex;flex-direction:column;gap:22px;scroll-margin-top:20px}
 .ck-card.ck-wide{grid-column:1/-1}
 .ck-card h4{margin:0 0 6px;font-size:1rem}
 .ck-card h4 b{font-family:var(--f-mono);color:var(--accent-ink);margin-right:8px}
+.ck-mcg td{vertical-align:middle}
+.ck-mcg .mcg-h,.ck-mcg .mcg-k{text-align:center;font-family:var(--f-display);font-weight:700}
+.ck-mcg .mcg-k{font-size:1.15rem;width:2.6em}
+.ck-mcg svg{display:block;margin:0 auto}
+.mcg-f{font-family:var(--f-mono);font-size:.82rem;line-height:1.8;white-space:pre;margin:2px 0}
+.mcg-d{color:var(--plot-a);font-weight:700}
+.mcg-hl{color:var(--warn);font-weight:700}
+.mcg-n{font-family:var(--f-body);font-size:.74rem;color:var(--muted)}
+table.mcg-mini{margin-top:6px;font-size:.74rem;border:1px solid var(--line)}
+table.mcg-mini th,table.mcg-mini td{padding:2px 6px;line-height:1.35;vertical-align:middle}
+table.mcg-mini .mono{white-space:nowrap;font-size:.95em}
+.ck-card h4 .ck-use{font-family:var(--f-body);font-size:.78rem;font-weight:500;color:var(--muted);margin-left:6px}
 .ck-card .formula{margin:6px 0;font-size:.84rem;padding:10px 12px;line-height:1.75}
 .ck-card .iofile{margin-top:8px}
 .ck-warn{margin:4px 0;font-size:.84rem;color:var(--accent-ink)}
@@ -8572,26 +8584,26 @@ joint tau_max t_at_max
 
 <div class="ck-block" id="ck-type">
   <h3 class="ck-h">문제 유형 판별표 <span>입력 ( ? ) → 출력 ( ? ) 을 먼저 적는다. 이 한 줄이 유형을 정한다</span></h3>
-  <div class="tbl"><table><thead><tr><th>입력 (주어진 것)</th><th>구하는 것</th><th>유형 → 핵심 식</th></tr></thead><tbody>
-<tr><td>관절 각도 θ<sub>1</sub>, θ<sub>2</sub></td><td class="ck-key">말단 좌표</td><td class="mono">FK → L<sub>1</sub>cos θ<sub>1</sub> + L<sub>2</sub>cos(θ<sub>1</sub>+θ<sub>2</sub>)</td></tr>
-<tr><td>목표 좌표 Px, Py</td><td class="ck-key">각도 (두 해)</td><td class="mono">IK → 코사인 법칙, θ<sub>1</sub> = β ∓ ψ</td></tr>
-<tr><td>목표 + 초기값·tol·반복</td><td class="ck-key">각도</td><td class="mono">IK 뉴턴-랩슨 → J·Δθ = f</td></tr>
-<tr><td>목표 Px, Py + 방향 φ</td><td class="ck-key">θ<sub>1</sub>, θ<sub>2</sub>, θ<sub>3</sub></td><td class="mono">3 Link IK → 3×3 J, wrap(φ)</td></tr>
-<tr><td>θ, <span class="ov1 tall">θ</span> (, <span class="ov2 tall">θ</span>)</td><td class="ck-key">속도 v (가속도 a)</td><td class="mono">MK → v = J·<span class="ov1 tall">θ</span>, a = J·<span class="ov2 tall">θ</span> + <span class="ov1 tall">J</span>·<span class="ov1 tall">θ</span></td></tr>
-<tr><td>q<sub>0</sub>, q_f, tf (acc)</td><td class="ck-key">q(t), v(t), a(t)</td><td class="mono">궤적 → CUBIC / LSPB / BBPB</td></tr>
-<tr><td>0/1 격자, 8방향</td><td class="ck-key">최단 경로</td><td class="mono">A* → f = g + h</td></tr>
-<tr><td>노드·간선·비용</td><td class="ck-key">최단 경로</td><td class="mono">Dijkstra → dist[u] + w &lt; dist[v]</td></tr>
-<tr><td>Kp, Ki, Kd, 목표 r</td><td class="ck-key">y(t), 오버슈트</td><td class="mono">PID → u = Kp·e + Ki·I + Kd·D</td></tr>
-<tr><td>목표 각도, Kp, Kd, 중력</td><td class="ck-key">정지 오차</td><td class="mono">PD+G → τ = Kp·e − Kd·<span class="ov1">q</span> + G</td></tr>
-<tr><td>목표 궤적, Kp, Kd</td><td class="ck-key">오차 응답</td><td class="mono">CTC → τ = M·u + C + G</td></tr>
-<tr><td>q, <span class="ov1">q</span>, <span class="ov2">q</span></td><td class="ck-key">토크 τ</td><td class="mono">동역학 → τ = M·<span class="ov2">q</span> + C + G</td></tr>
+  <div class="tbl"><table><thead><tr><th>번호</th><th>입력 (주어진 것)</th><th>구하는 것</th><th>유형 → 핵심 식</th></tr></thead><tbody>
+<tr><td class="mono">01</td><td>관절 각도 θ<sub>1</sub>, θ<sub>2</sub></td><td class="ck-key">말단 좌표</td><td class="mono">FK → L<sub>1</sub>cos θ<sub>1</sub> + L<sub>2</sub>cos(θ<sub>1</sub>+θ<sub>2</sub>)</td></tr>
+<tr><td class="mono">02</td><td>목표 좌표 Px, Py</td><td class="ck-key">각도 (두 해)</td><td class="mono">IK → 코사인 법칙, θ<sub>1</sub> = β ∓ ψ</td></tr>
+<tr><td class="mono">03</td><td>목표 + 초기값·tol·반복</td><td class="ck-key">각도</td><td class="mono">IK 뉴턴-랩슨 → J·Δθ = f</td></tr>
+<tr><td class="mono">04</td><td>목표 Px, Py + 방향 φ</td><td class="ck-key">θ<sub>1</sub>, θ<sub>2</sub>, θ<sub>3</sub></td><td class="mono">3 Link IK → 3×3 J, wrap(φ)</td></tr>
+<tr><td class="mono">05</td><td>θ, <span class="ov1 tall">θ</span> (, <span class="ov2 tall">θ</span>)</td><td class="ck-key">속도 v (가속도 a)</td><td class="mono">MK → v = J·<span class="ov1 tall">θ</span>, a = J·<span class="ov2 tall">θ</span> + <span class="ov1 tall">J</span>·<span class="ov1 tall">θ</span></td></tr>
+<tr><td class="mono">06~08</td><td>q<sub>0</sub>, q_f, tf (acc)</td><td class="ck-key">q(t), v(t), a(t)</td><td class="mono">궤적 → CUBIC / LSPB / BBPB</td></tr>
+<tr><td class="mono">09</td><td>0/1 격자, 8방향</td><td class="ck-key">최단 경로</td><td class="mono">A* → f = g + h</td></tr>
+<tr><td class="mono">10</td><td>노드·간선·비용</td><td class="ck-key">최단 경로</td><td class="mono">Dijkstra → dist[u] + w &lt; dist[v]</td></tr>
+<tr><td class="mono">11</td><td>Kp, Ki, Kd, 목표 r</td><td class="ck-key">y(t), 오버슈트</td><td class="mono">PID → u = Kp·e + Ki·I + Kd·D</td></tr>
+<tr><td class="mono">12</td><td>목표 각도, Kp, Kd, 중력</td><td class="ck-key">정지 오차</td><td class="mono">PD+G → τ = Kp·e − Kd·<span class="ov1">q</span> + G</td></tr>
+<tr><td class="mono">13</td><td>목표 궤적, Kp, Kd</td><td class="ck-key">오차 응답</td><td class="mono">CTC → τ = M·u + C + G</td></tr>
+<tr><td class="mono">14</td><td>q, <span class="ov1">q</span>, <span class="ov2">q</span></td><td class="ck-key">토크 τ</td><td class="mono">동역학 → τ = M·<span class="ov2">q</span> + C + G</td></tr>
 </tbody></table></div>
   <div class="ck-grid" style="margin-top:14px">
     <div class="ck-card"><h4>궤적 3가지 가르기</h4>
       <ul class="ck-list"><li><code>acc</code>가 입력으로 주어짐 → <b>LSPB</b> (사다리꼴, 중간 등속)</li><li>가속·감속 시간이 같고 등속 구간 없음 → <b>BBPB</b> (acc = 4Δq/tf² 는 결과)</li><li>시작·끝 속도 0, 부드럽게 → <b>CUBIC</b></li></ul></div>
     <div class="ck-card"><h4>모든 문제 공통 순서</h4>
       <ol class="ck-list"><li>입력 읽기</li><li>단위 변환 (도 → rad)</li><li>M·C·G·J 를 함수로</li><li>식 대입</li><li>형식에 맞춰 출력</li><li>검산</li></ol></div>
-    <div class="ck-card ck-wide"><h4>4단계 · 동역학은 “무엇이 주어졌나”로 가르기</h4>
+    <div class="ck-card ck-wide"><h4>동역학(12~14)은 “무엇이 주어졌나”로 가르기</h4>
       <div class="tbl"><table><thead><tr><th>문제 문장</th><th>해석</th><th>계산</th></tr></thead><tbody>
 <tr><td>“q, <span class="ov1">q</span>, <span class="ov2">q</span>일 때 필요한 토크”</td><td class="ck-key">역동역학</td><td class="mono">τ = M·<span class="ov2">q</span> + C + G</td></tr>
 <tr><td>“토크 τ를 줬을 때 가속도”</td><td class="ck-key">순동역학</td><td class="mono"><span class="ov2">q</span> = solve(M, τ − C − G)</td></tr>
@@ -9159,7 +9171,7 @@ dist[u] + w(u,v) &lt; dist[v]  ⇒  dist[v] = dist[u] + w,  prev[v] = u
 </div>
 
 <div class="ck-block" id="ck-ctrl">
-  <h3 class="ck-h">제어 · 동역학 <span>11 PID · 12 PD+G · 13 CTC · 14 동역학</span></h3>
+  <h3 class="ck-h">제어 · 동역학 <span>11 PID · 공통 M, C, G · 12 PD+G · 13 CTC · 14 동역학</span></h3>
   <div class="ck-grid">
     <div class="ck-card ck-wide"><h4><b>11</b>PID 제어 (이산)</h4>
       <div class="formula">e = r − y      I += e·Ts      D = (e − e_prev)/Ts
@@ -9223,14 +9235,247 @@ Ki = 0 정상상태 : y_ss = Kp·r/(k+Kp),  ess = r − y_ss</div>
 </svg>
 </div></div>
 </div>
-    <div class="ck-card ck-wide"><h4><b>12~14</b>2링크 수직 로봇 · M, C, G (공통)</h4>
+    <div class="ck-card ck-wide"><h4><b>공통</b>1링크 · 2링크 수직 로봇 · M, C, G 한눈에 비교 <span class="ck-use">12~14 에서 사용</span></h4>
+      <div class="tbl"><table class="ck-mcg"><colgroup><col style="width:5%"><col style="width:17%"><col style="width:33%"><col style="width:45%"></colgroup><thead><tr><th colspan="2">항목</th><th>1링크</th><th>2링크</th></tr></thead><tbody>
+<tr><td colspan="2" class="mcg-h">챠트</td><td><svg viewBox="0 0 300 250" width="300" style="max-width:100%;height:auto" role="img" aria-label="1링크 수직 로봇 모델" font-family="var(--f-body)" font-size="14"><defs><marker id="ck_model1_ink" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto"><path d="M0,0 L10,5 L0,10 z" fill="var(--ink)"/></marker><marker id="ck_model1_muted" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto"><path d="M0,0 L10,5 L0,10 z" fill="var(--muted)"/></marker><marker id="ck_model1_q" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto"><path d="M0,0 L10,5 L0,10 z" fill="var(--plot-q)"/></marker><marker id="ck_model1_v" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto"><path d="M0,0 L10,5 L0,10 z" fill="var(--plot-v)"/></marker><marker id="ck_model1_a" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto"><path d="M0,0 L10,5 L0,10 z" fill="var(--plot-a)"/></marker><marker id="ck_model1_acc" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto"><path d="M0,0 L10,5 L0,10 z" fill="var(--accent)"/></marker></defs>
+<line x1="20.0" y1="190.0" x2="292.0" y2="190.0" stroke="var(--muted)" stroke-width="1.4" stroke-dasharray="5 5" stroke-linecap="round"/>
+<text x="292.0" y="210.0" fill="var(--muted)" font-size="14" text-anchor="end" stroke="var(--surface)" stroke-width="4" paint-order="stroke" stroke-linejoin="round">수평 (θ = 0)</text>
+<line x1="40.0" y1="190.0" x2="163.4" y2="42.9" stroke="var(--plot-q)" stroke-width="8" stroke-linecap="round"/>
+<circle cx="40.0" cy="190.0" r="9" fill="var(--surface)" stroke="var(--ink)" stroke-width="2"/>
+<circle cx="163.4" cy="42.9" r="6" fill="var(--ink)" stroke="var(--ink)" stroke-width="2"/>
+<circle cx="101.7" cy="116.5" r="8" fill="var(--accent)" stroke="var(--ink)" stroke-width="2"/>
+<text x="174.4" y="48.9" fill="var(--plot-q)" font-size="17" text-anchor="start" font-weight="700" stroke="var(--surface)" stroke-width="4" paint-order="stroke" stroke-linejoin="round">L</text>
+<text x="88.7" y="110.5" fill="var(--ink)" font-size="14" text-anchor="end" font-weight="600" stroke="var(--surface)" stroke-width="4" paint-order="stroke" stroke-linejoin="round">Lc (무게중심)</text>
+<line x1="101.7" y1="116.5" x2="101.7" y2="174.5" stroke="var(--plot-v)" stroke-width="3" marker-end="url(#ck_model1_v)" stroke-linecap="round"/>
+<text x="111.7" y="150.5" fill="var(--plot-v)" font-size="15" text-anchor="start" font-weight="700" stroke="var(--surface)" stroke-width="4" paint-order="stroke" stroke-linejoin="round">m·g</text>
+<path d="M80.0,190.0 A40.0,40.0 0 0 0 65.7,159.4" fill="none" stroke="var(--plot-q)" stroke-width="2.4"/>
+<text x="87.0" y="180.0" fill="var(--plot-q)" font-size="17" text-anchor="start" font-weight="700" stroke="var(--surface)" stroke-width="4" paint-order="stroke" stroke-linejoin="round">θ</text>
+<line x1="101.7" y1="120.5" x2="101.7" y2="220.0" stroke="var(--muted)" stroke-width="1.2" stroke-dasharray="3 4" stroke-linecap="round"/>
+<line x1="40.0" y1="216.0" x2="101.7" y2="216.0" stroke="var(--plot-a)" stroke-width="2.4" stroke-linecap="round"/>
+<line x1="40.0" y1="209.0" x2="40.0" y2="223.0" stroke="var(--plot-a)" stroke-width="2.4" stroke-linecap="round"/>
+<line x1="101.7" y1="209.0" x2="101.7" y2="223.0" stroke="var(--plot-a)" stroke-width="2.4" stroke-linecap="round"/>
+<text x="70.9" y="240.0" fill="var(--plot-a)" font-size="15" text-anchor="middle" font-weight="700" stroke="var(--surface)" stroke-width="4" paint-order="stroke" stroke-linejoin="round">Lc·cos θ</text>
+</svg>
+</td><td><svg viewBox="0 0 380 300" width="380" style="max-width:100%;height:auto" role="img" aria-label="2링크 수직 로봇 모델" font-family="var(--f-body)" font-size="14"><defs><marker id="ck_model2_ink" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto"><path d="M0,0 L10,5 L0,10 z" fill="var(--ink)"/></marker><marker id="ck_model2_muted" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto"><path d="M0,0 L10,5 L0,10 z" fill="var(--muted)"/></marker><marker id="ck_model2_q" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto"><path d="M0,0 L10,5 L0,10 z" fill="var(--plot-q)"/></marker><marker id="ck_model2_v" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto"><path d="M0,0 L10,5 L0,10 z" fill="var(--plot-v)"/></marker><marker id="ck_model2_a" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto"><path d="M0,0 L10,5 L0,10 z" fill="var(--plot-a)"/></marker><marker id="ck_model2_acc" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto"><path d="M0,0 L10,5 L0,10 z" fill="var(--accent)"/></marker></defs>
+<line x1="24.0" y1="245.0" x2="262.8" y2="245.0" stroke="var(--muted)" stroke-width="1.2" stroke-dasharray="5 5" stroke-linecap="round"/>
+<line x1="182.9" y1="162.5" x2="273.6" y2="162.5" stroke="var(--muted)" stroke-width="1.1" stroke-dasharray="2 4" stroke-linecap="round"/>
+<line x1="182.9" y1="162.5" x2="232.9" y2="133.6" stroke="var(--muted)" stroke-width="1.3" stroke-dasharray="6 4" stroke-linecap="round"/>
+<line x1="40.0" y1="245.0" x2="200.0" y2="98.7" stroke="var(--plot-a)" stroke-width="1.8" stroke-dasharray="7 5" stroke-linecap="round"/>
+<line x1="40.0" y1="245.0" x2="182.9" y2="162.5" stroke="var(--plot-q)" stroke-width="7" stroke-linecap="round"/>
+<line x1="182.9" y1="162.5" x2="217.1" y2="35.0" stroke="var(--plot-v)" stroke-width="7" stroke-linecap="round"/>
+<circle cx="40.0" cy="245.0" r="8" fill="var(--surface)" stroke="var(--ink)" stroke-width="2"/>
+<circle cx="182.9" cy="162.5" r="7" fill="var(--surface)" stroke="var(--ink)" stroke-width="2"/>
+<circle cx="217.1" cy="35.0" r="5" fill="var(--ink)" stroke="var(--ink)" stroke-width="2"/>
+<circle cx="111.4" cy="203.8" r="6" fill="var(--accent)" stroke="var(--ink)" stroke-width="2"/>
+<line x1="111.4" y1="203.8" x2="111.4" y2="235.8" stroke="var(--plot-a)" stroke-width="2.4" marker-end="url(#ck_model2_a)" stroke-linecap="round"/>
+<text x="119.4" y="225.8" fill="var(--plot-a)" font-size="12" text-anchor="start" font-weight="700" stroke="var(--surface)" stroke-width="4" paint-order="stroke" stroke-linejoin="round">m<tspan baseline-shift="sub" font-size="72%">1</tspan>·g</text>
+<circle cx="200.0" cy="98.7" r="6" fill="var(--accent)" stroke="var(--ink)" stroke-width="2"/>
+<line x1="200.0" y1="98.7" x2="200.0" y2="130.7" stroke="var(--plot-a)" stroke-width="2.4" marker-end="url(#ck_model2_a)" stroke-linecap="round"/>
+<text x="208.0" y="120.7" fill="var(--plot-a)" font-size="12" text-anchor="start" font-weight="700" stroke="var(--surface)" stroke-width="4" paint-order="stroke" stroke-linejoin="round">m<tspan baseline-shift="sub" font-size="72%">2</tspan>·g</text>
+<text x="110.0" y="165.9" fill="var(--plot-a)" font-size="15" text-anchor="end" font-weight="700" stroke="var(--surface)" stroke-width="4" paint-order="stroke" stroke-linejoin="round">D</text>
+<text x="155.5" y="204.6" fill="var(--plot-q)" font-size="13" text-anchor="start" font-weight="700" stroke="var(--surface)" stroke-width="4" paint-order="stroke" stroke-linejoin="round">L<tspan baseline-shift="sub" font-size="72%">1</tspan> (a)</text>
+<text x="207.1" y="39.0" fill="var(--plot-v)" font-size="14" text-anchor="end" font-weight="700" stroke="var(--surface)" stroke-width="4" paint-order="stroke" stroke-linejoin="round">L<tspan baseline-shift="sub" font-size="72%">2</tspan></text>
+<text x="103.4" y="195.8" fill="var(--ink)" font-size="12" text-anchor="end" font-weight="600" stroke="var(--surface)" stroke-width="4" paint-order="stroke" stroke-linejoin="round">Lc<tspan baseline-shift="sub" font-size="72%">1</tspan></text>
+<text x="190.0" y="100.7" fill="var(--ink)" font-size="12" text-anchor="end" font-weight="600" stroke="var(--surface)" stroke-width="4" paint-order="stroke" stroke-linejoin="round">Lc<tspan baseline-shift="sub" font-size="72%">2</tspan> (b)</text>
+<path d="M70.0,245.0 A30.0,30.0 0 0 0 66.0,230.0" fill="none" stroke="var(--plot-q)" stroke-width="2"/>
+<text x="83.0" y="239.9" fill="var(--plot-q)" font-size="14" text-anchor="middle" stroke="var(--surface)" stroke-width="4" paint-order="stroke" stroke-linejoin="round">θ<tspan baseline-shift="sub" font-size="72%">1</tspan></text>
+<path d="M208.9,147.5 A30.0,30.0 0 0 0 190.7,133.5" fill="none" stroke="var(--plot-v)" stroke-width="2"/>
+<text x="226.1" y="150.8" fill="var(--plot-v)" font-size="14" text-anchor="middle" stroke="var(--surface)" stroke-width="4" paint-order="stroke" stroke-linejoin="round">θ<tspan baseline-shift="sub" font-size="72%">2</tspan></text>
+<text x="14.0" y="274.0" fill="var(--plot-a)" font-size="12" text-anchor="start" font-weight="600" stroke="var(--surface)" stroke-width="4" paint-order="stroke" stroke-linejoin="round">D = |a + b| : 관절 1 → 2번 링크 무게중심</text>
+<text x="14.0" y="294.0" fill="var(--plot-a)" font-size="12" text-anchor="start" font-weight="600" stroke="var(--surface)" stroke-width="4" paint-order="stroke" stroke-linejoin="round">D² = L<tspan baseline-shift="sub" font-size="72%">1</tspan>² + Lc<tspan baseline-shift="sub" font-size="72%">2</tspan>² + 2·L<tspan baseline-shift="sub" font-size="72%">1</tspan>·Lc<tspan baseline-shift="sub" font-size="72%">2</tspan>·cos θ<tspan baseline-shift="sub" font-size="72%">2</tspan></text>
+</svg>
+
+<table class="mcg-mini"><thead><tr><th>성분</th><th>m<sub>2</sub> 부분</th><th>벡터로</th><th>뜻</th></tr></thead><tbody>
+<tr><td>M<sub>22</sub></td><td class="mono">Lc<sub>2</sub>²</td><td class="mono">b·b</td><td>관절2 거리²</td></tr>
+<tr><td>M<sub>12</sub></td><td class="mono">Lc<sub>2</sub>²+L<sub>1</sub>·Lc<sub>2</sub>·cosθ<sub>2</sub></td><td class="mono">b·(a+b)</td><td>관절2 거리×관절1 거리(방향 고려)</td></tr>
+<tr><td>M<sub>11</sub></td><td class="mono">L<sub>1</sub>²+Lc<sub>2</sub>²+2·L<sub>1</sub>·Lc<sub>2</sub>·cosθ<sub>2</sub></td><td class="mono">(a+b)·(a+b)</td><td>관절1 거리²</td></tr>
+</tbody></table>
+<table class="mcg-mini"><tbody>
+<tr><td>M<sub>11</sub></td><td>관절 1을 돌릴 때 <b>관절 1 자신</b>이 느끼는 무게</td></tr>
+<tr><td>M<sub>22</sub></td><td>관절 2를 돌릴 때 <b>관절 2 자신</b>이 느끼는 무게</td></tr>
+<tr><td>M<sub>12</sub></td><td>한 관절을 돌릴 때 <b>다른 관절</b>이 느끼는 무게</td></tr>
+</tbody></table></td></tr>
+<tr><td class="mcg-k">M</td><td><b>관성 행렬</b><br>관절을 돌리기 얼마나 무거운가<br><span class="mono">I</span> : 무게중심 기준 관성 모멘트</td>
+<td><div class="mcg-f">M = I + m·Lc²
+I = (1/12)·m·L²
+∴ M = (1/12)·m·L² + m·Lc²
+    = (1/3)·m·L²  (Lc = L/2)</div>자세와 상관없는 상수</td>
+<td><div class="mcg-f">M = [[ M<sub>11</sub>, M<sub>12</sub> ], [ M<sub>21</sub>, M<sub>22</sub> ]],  M<sub>21</sub> = M<sub>12</sub>
+I<sub>1</sub> = (1/12)·m<sub>1</sub>·L<sub>1</sub>²,  I<sub>2</sub> = (1/12)·m<sub>2</sub>·L<sub>2</sub>²
+M<sub>11</sub> = I<sub>1</sub> + m<sub>1</sub>·Lc<sub>1</sub>² + I<sub>2</sub> + m<sub>2</sub>·<span class="mcg-d">D</span>²   <span class="mcg-n">(각 링크의 무게중심에서 회전축까지의 거리)</span>
+    = I<sub>1</sub> + I<sub>2</sub> + m<sub>1</sub>·Lc<sub>1</sub>² + m<sub>2</sub>·(L<sub>1</sub>² + Lc<sub>2</sub>² + 2·L<sub>1</sub>·Lc<sub>2</sub>·cos θ<sub>2</sub>)
+M<sub>22</sub> = I<sub>2</sub> + m<sub>2</sub>·Lc<sub>2</sub>²
+M<sub>12</sub> = I<sub>2</sub> + m<sub>2</sub>·Lc<sub>2</sub>² + <span class="mcg-hl">m<sub>2</sub>·L<sub>1</sub>·Lc<sub>2</sub>·cos θ<sub>2</sub></span></div></td></tr>
+<tr><td class="mcg-k">G</td><td><b>중력 항</b><br>팔을 들고 있는 데 드는 토크<br>θ = 0일 때 링크가 수평이면 cos, 수직이면 sin</td>
+<td>θ = 0 일 때 수평이므로<div class="mcg-f">∴ G = m·g·Lc·cos θ</div></td>
+<td><div class="mcg-f">G = [ G<sub>1</sub>, G<sub>2</sub> ]
+G<sub>1</sub> = (m<sub>1</sub>·Lc<sub>1</sub> + m<sub>2</sub>·L<sub>1</sub>)·g·cos θ<sub>1</sub> + m<sub>2</sub>·Lc<sub>2</sub>·g·cos(θ<sub>1</sub> + θ<sub>2</sub>)
+G<sub>2</sub> = m<sub>2</sub>·Lc<sub>2</sub>·g·cos(θ<sub>1</sub> + θ<sub>2</sub>)</div></td></tr>
+<tr><td class="mcg-k">C</td><td><b>코리올리·원심력 항</b><br>다른 관절의 회전 때문에 생기는 힘</td>
+<td>관절이 1개이므로<div class="mcg-f">∴ C = 0</div></td>
+<td><div class="mcg-f">h = m<sub>2</sub>·L<sub>1</sub>·Lc<sub>2</sub>·sin θ<sub>2</sub>
+C = [ −h·<span class="ov1 tall">θ</span><sub>2</sub>·(2<span class="ov1 tall">θ</span><sub>1</sub> + <span class="ov1 tall">θ</span><sub>2</sub>) ;  h·<span class="ov1 tall">θ</span><sub>1</sub>² ]</div>멈춰 있으면(<span class="ov1 tall">θ</span> = 0) C = 0</td></tr>
+<tr><td class="mcg-k">τ</td><td><b>토크 공식</b><br>M, C, G 를 합친 관절 토크<div class="mcg-f">τ = M·<span class="ov2 tall">θ</span> + C + G</div></td>
+<td><div class="mcg-f">τ = M·<span class="ov2 tall">θ</span> + G   (C = 0)
+  = (I + m·Lc²)·<span class="ov2 tall">θ</span> + m·g·Lc·cos θ</div></td>
+<td><div class="mcg-f">[ τ<sub>1</sub> ; τ<sub>2</sub> ] = M·[ <span class="ov2 tall">θ</span><sub>1</sub> ; <span class="ov2 tall">θ</span><sub>2</sub> ] + C + G
+τ<sub>1</sub> = M<sub>11</sub>·<span class="ov2 tall">θ</span><sub>1</sub> + M<sub>12</sub>·<span class="ov2 tall">θ</span><sub>2</sub> + C<sub>1</sub> + G<sub>1</sub>
+τ<sub>2</sub> = M<sub>12</sub>·<span class="ov2 tall">θ</span><sub>1</sub> + M<sub>22</sub>·<span class="ov2 tall">θ</span><sub>2</sub> + C<sub>2</sub> + G<sub>2</sub></div></td></tr>
+</tbody></table></div></div>
+    <div class="ck-card ck-wide"><h4><b>공통</b>1링크 수직 로봇 · M, C, G <span class="ck-use">12~14 에서 사용</span></h4>
+      <div class="formula">I<sub>1</sub> = m<sub>1</sub>l<sub>1</sub>²/12                       <span class="c"># 무게중심 기준 관성 (균일 막대)</span>
+M = I<sub>1</sub> + m<sub>1</sub>lc<sub>1</sub>²                     <span class="c"># 관절 기준 관성, 스칼라 (lc<sub>1</sub> = l<sub>1</sub>/2 이면 m<sub>1</sub>l<sub>1</sub>²/3)</span>
+C = 0                               <span class="c"># 관절이 하나라 원심력·코리올리 항 없음</span>
+G = m<sub>1</sub>·g·lc<sub>1</sub>·cos q
+τ = M·<span class="ov2">q</span> + G
+숫자 확인 : m<sub>1</sub> 1.5, l<sub>1</sub> 0.8, lc<sub>1</sub> 0.4, q 60°, <span class="ov2">q</span> 2  →  M = 0.32,  G = 2.943,  τ = 3.583</div>
+      <p class="ck-warn">▶ 2링크 식에서 m<sub>2</sub> = 0 으로 둔 것과 같음 · 문제에 관절 기준 관성 I 가 주어지면 M = I 그대로 (5-2·5-3 의 1링크 예: I = 0.26)</p>
+<div class="iofile" style="margin-top:10px"><div class="bar2"><span>그림 · 1링크 — M 은 상수, C = 0, G 는 cos q 를 따라 수평에서 최대</span></div><div style="padding:12px 14px">
+<svg viewBox="0 0 720 450" width="720" style="max-width:100%;height:auto" role="img" aria-label="1링크 수직 로봇의 M, C, G" font-family="var(--f-body)" font-size="14"><defs><marker id="ck_mcg1_ink" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto"><path d="M0,0 L10,5 L0,10 z" fill="var(--ink)"/></marker><marker id="ck_mcg1_muted" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto"><path d="M0,0 L10,5 L0,10 z" fill="var(--muted)"/></marker><marker id="ck_mcg1_q" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto"><path d="M0,0 L10,5 L0,10 z" fill="var(--plot-q)"/></marker><marker id="ck_mcg1_v" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto"><path d="M0,0 L10,5 L0,10 z" fill="var(--plot-v)"/></marker><marker id="ck_mcg1_a" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto"><path d="M0,0 L10,5 L0,10 z" fill="var(--plot-a)"/></marker><marker id="ck_mcg1_acc" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto"><path d="M0,0 L10,5 L0,10 z" fill="var(--accent)"/></marker></defs>
+<text x="20.0" y="26.0" fill="var(--ink)" font-size="15" text-anchor="start" font-weight="700" stroke="var(--surface)" stroke-width="4" paint-order="stroke" stroke-linejoin="round">공통 · 1링크 — G 는 ‘무게 × 수평 거리’ (m<tspan baseline-shift="sub" font-size="72%">1</tspan> = 1.5, l<tspan baseline-shift="sub" font-size="72%">1</tspan> = 0.8, lc<tspan baseline-shift="sub" font-size="72%">1</tspan> = 0.4)</text>
+<line x1="50.0" y1="290.0" x2="256.0" y2="290.0" stroke="var(--muted)" stroke-width="1.2" stroke-dasharray="5 5" stroke-linecap="round"/>
+<text x="256.0" y="308.0" fill="var(--muted)" font-size="12" text-anchor="end" stroke="var(--surface)" stroke-width="4" paint-order="stroke" stroke-linejoin="round">수평 (q = 0)</text>
+<line x1="70.0" y1="290.0" x2="190.0" y2="82.2" stroke="var(--plot-q)" stroke-width="7" stroke-linecap="round"/>
+<circle cx="70.0" cy="290.0" r="8" fill="var(--surface)" stroke="var(--ink)" stroke-width="2"/>
+<circle cx="190.0" cy="82.2" r="5" fill="var(--ink)" stroke="var(--ink)" stroke-width="2"/>
+<circle cx="130.0" cy="186.1" r="7" fill="var(--accent)" stroke="var(--ink)" stroke-width="2"/>
+<text x="142.0" y="182.1" fill="var(--ink)" font-size="12" text-anchor="start" stroke="var(--surface)" stroke-width="4" paint-order="stroke" stroke-linejoin="round">무게중심</text>
+<line x1="130.0" y1="186.1" x2="130.0" y2="244.1" stroke="var(--plot-v)" stroke-width="2.6" marker-end="url(#ck_mcg1_v)" stroke-linecap="round"/>
+<text x="139.0" y="218.1" fill="var(--plot-v)" font-size="13" text-anchor="start" font-weight="700" stroke="var(--surface)" stroke-width="4" paint-order="stroke" stroke-linejoin="round">m<tspan baseline-shift="sub" font-size="72%">1</tspan>·g</text>
+<path d="M110.0,290.0 A40.0,40.0 0 0 0 90.0,255.4" fill="none" stroke="var(--plot-q)" stroke-width="2"/>
+<text x="146.0" y="278.0" fill="var(--plot-q)" font-size="13" text-anchor="start" font-weight="700" stroke="var(--surface)" stroke-width="4" paint-order="stroke" stroke-linejoin="round">q = 60°</text>
+<line x1="130.0" y1="190.1" x2="130.0" y2="316.0" stroke="var(--muted)" stroke-width="1" stroke-dasharray="3 4" stroke-linecap="round"/>
+<line x1="70.0" y1="312.0" x2="130.0" y2="312.0" stroke="var(--plot-a)" stroke-width="2" stroke-linecap="round"/>
+<line x1="70.0" y1="306.0" x2="70.0" y2="318.0" stroke="var(--plot-a)" stroke-width="2" stroke-linecap="round"/>
+<line x1="130.0" y1="306.0" x2="130.0" y2="318.0" stroke="var(--plot-a)" stroke-width="2" stroke-linecap="round"/>
+<text x="100.0" y="334.0" fill="var(--plot-a)" font-size="12" text-anchor="middle" font-weight="700" stroke="var(--surface)" stroke-width="4" paint-order="stroke" stroke-linejoin="round">lc<tspan baseline-shift="sub" font-size="72%">1</tspan>·cos q = 0.20 m</text>
+<text x="20.0" y="358.0" fill="var(--muted)" font-size="12" text-anchor="start" stroke="var(--surface)" stroke-width="4" paint-order="stroke" stroke-linejoin="round">팔이 수평에 가까울수록 이 거리가 길어져 G 가 커진다</text>
+<line x1="410.0" y1="274.0" x2="690.0" y2="274.0" stroke="var(--line)" stroke-width="1" stroke-linecap="round"/>
+<line x1="410.0" y1="212.5" x2="690.0" y2="212.5" stroke="var(--line)" stroke-width="1" stroke-linecap="round"/>
+<line x1="410.0" y1="150.9" x2="690.0" y2="150.9" stroke="var(--line)" stroke-width="1" stroke-linecap="round"/>
+<line x1="410.0" y1="89.4" x2="690.0" y2="89.4" stroke="var(--line)" stroke-width="1" stroke-linecap="round"/>
+<line x1="410.0" y1="74.0" x2="410.0" y2="274.0" stroke="var(--line)" stroke-width="1" stroke-linecap="round"/>
+<line x1="480.0" y1="74.0" x2="480.0" y2="274.0" stroke="var(--line)" stroke-width="1" stroke-linecap="round"/>
+<line x1="550.0" y1="74.0" x2="550.0" y2="274.0" stroke="var(--line)" stroke-width="1" stroke-linecap="round"/>
+<line x1="620.0" y1="74.0" x2="620.0" y2="274.0" stroke="var(--line)" stroke-width="1" stroke-linecap="round"/>
+<line x1="690.0" y1="74.0" x2="690.0" y2="274.0" stroke="var(--line)" stroke-width="1" stroke-linecap="round"/>
+<line x1="410.0" y1="274.0" x2="690.0" y2="274.0" stroke="var(--ink)" stroke-width="1.5" stroke-linecap="round"/>
+<line x1="410.0" y1="74.0" x2="410.0" y2="274.0" stroke="var(--ink)" stroke-width="1.5" stroke-linecap="round"/>
+<text x="410.0" y="291.0" fill="var(--muted)" font-size="12" text-anchor="middle" stroke="var(--surface)" stroke-width="4" paint-order="stroke" stroke-linejoin="round">-90°</text>
+<text x="480.0" y="291.0" fill="var(--muted)" font-size="12" text-anchor="middle" stroke="var(--surface)" stroke-width="4" paint-order="stroke" stroke-linejoin="round">-45°</text>
+<text x="550.0" y="291.0" fill="var(--muted)" font-size="12" text-anchor="middle" stroke="var(--surface)" stroke-width="4" paint-order="stroke" stroke-linejoin="round">0°</text>
+<text x="620.0" y="291.0" fill="var(--muted)" font-size="12" text-anchor="middle" stroke="var(--surface)" stroke-width="4" paint-order="stroke" stroke-linejoin="round">45°</text>
+<text x="690.0" y="291.0" fill="var(--muted)" font-size="12" text-anchor="middle" stroke="var(--surface)" stroke-width="4" paint-order="stroke" stroke-linejoin="round">90°</text>
+<text x="403.0" y="278.0" fill="var(--muted)" font-size="12" text-anchor="end" stroke="var(--surface)" stroke-width="4" paint-order="stroke" stroke-linejoin="round">0</text>
+<text x="403.0" y="216.5" fill="var(--muted)" font-size="12" text-anchor="end" stroke="var(--surface)" stroke-width="4" paint-order="stroke" stroke-linejoin="round">2</text>
+<text x="403.0" y="154.9" fill="var(--muted)" font-size="12" text-anchor="end" stroke="var(--surface)" stroke-width="4" paint-order="stroke" stroke-linejoin="round">4</text>
+<text x="403.0" y="93.4" fill="var(--muted)" font-size="12" text-anchor="end" stroke="var(--surface)" stroke-width="4" paint-order="stroke" stroke-linejoin="round">6</text>
+<text x="690.0" y="310.0" fill="var(--ink)" font-size="13" text-anchor="end" stroke="var(--surface)" stroke-width="4" paint-order="stroke" stroke-linejoin="round">q (°)</text>
+<text x="406.0" y="64.0" fill="var(--ink)" font-size="13" text-anchor="start" stroke="var(--surface)" stroke-width="4" paint-order="stroke" stroke-linejoin="round">G (N·m)</text>
+<polyline points="410.0,274.0 414.7,264.5 419.3,255.1 424.0,245.7 428.7,236.3 433.3,227.1 438.0,218.0 442.7,209.1 447.3,200.3 452.0,191.8 456.7,183.4 461.3,175.4 466.0,167.5 470.7,160.0 475.3,152.8 480.0,145.9 484.7,139.4 489.3,133.3 494.0,127.5 498.7,122.1 503.3,117.2 508.0,112.6 512.7,108.5 517.3,104.9 522.0,101.8 526.7,99.1 531.3,96.8 536.0,95.1 540.7,93.9 545.3,93.1 550.0,92.9 554.7,93.1 559.3,93.9 564.0,95.1 568.7,96.8 573.3,99.1 578.0,101.8 582.7,104.9 587.3,108.5 592.0,112.6 596.7,117.2 601.3,122.1 606.0,127.5 610.7,133.3 615.3,139.4 620.0,145.9 624.7,152.8 629.3,160.0 634.0,167.5 638.7,175.4 643.3,183.4 648.0,191.8 652.7,200.3 657.3,209.1 662.0,218.0 666.7,227.1 671.3,236.3 676.0,245.7 680.7,255.1 685.3,264.5 690.0,274.0" fill="none" stroke="var(--plot-v)" stroke-width="3" stroke-linejoin="round" stroke-linecap="round"/>
+<line x1="643.3" y1="274.0" x2="643.3" y2="183.4" stroke="var(--muted)" stroke-width="1.2" stroke-dasharray="3 4" stroke-linecap="round"/>
+<line x1="410.0" y1="183.4" x2="643.3" y2="183.4" stroke="var(--muted)" stroke-width="1.2" stroke-dasharray="3 4" stroke-linecap="round"/>
+<circle cx="643.3" cy="183.4" r="5" fill="var(--accent)" stroke="var(--ink)" stroke-width="2"/>
+<text x="651.3" y="175.4" fill="var(--accent)" font-size="12" text-anchor="start" font-weight="700" stroke="var(--surface)" stroke-width="4" paint-order="stroke" stroke-linejoin="round">60° → 2.943</text>
+<text x="550.0" y="82.9" fill="var(--plot-v)" font-size="12" text-anchor="middle" font-weight="700" stroke="var(--surface)" stroke-width="4" paint-order="stroke" stroke-linejoin="round">수평 : 최대 5.886</text>
+<text x="686.0" y="264.0" fill="var(--plot-v)" font-size="12" text-anchor="end" font-weight="600" stroke="var(--surface)" stroke-width="4" paint-order="stroke" stroke-linejoin="round">수직 : 0</text>
+<text x="20.0" y="392.0" fill="var(--ink)" font-size="12" text-anchor="start" font-weight="600" stroke="var(--surface)" stroke-width="4" paint-order="stroke" stroke-linejoin="round">M = I<tspan baseline-shift="sub" font-size="72%">1</tspan> + m<tspan baseline-shift="sub" font-size="72%">1</tspan>lc<tspan baseline-shift="sub" font-size="72%">1</tspan>² = 0.08 + 0.24 = 0.32   ← 자세와 상관없는 상수</text>
+<text x="20.0" y="412.0" fill="var(--ink)" font-size="12" text-anchor="start" font-weight="600" stroke="var(--surface)" stroke-width="4" paint-order="stroke" stroke-linejoin="round">C = 0   ← 관절이 하나라 원심력·코리올리 항이 없다</text>
+<text x="20.0" y="432.0" fill="var(--ink)" font-size="12" text-anchor="start" stroke="var(--surface)" stroke-width="4" paint-order="stroke" stroke-linejoin="round">G = m<tspan baseline-shift="sub" font-size="72%">1</tspan>·g·lc<tspan baseline-shift="sub" font-size="72%">1</tspan>·cos q = 1.5·9.81·0.4·cos 60° = 2.943  ·  τ = M·q̈ + G  →  q̈ = 2 이면 0.32·2 + 2.943 = 3.583</text>
+</svg>
+</div></div>
+</div>
+    <div class="ck-card ck-wide"><h4><b>공통</b>2링크 수직 로봇 · M, C, G <span class="ck-use">12~14 에서 사용</span></h4>
       <div class="formula">I<sub>1</sub> = m<sub>1</sub>l<sub>1</sub>²/12    I<sub>2</sub> = m<sub>2</sub>l<sub>2</sub>²/12    h = m<sub>2</sub>·l<sub>1</sub>·lc<sub>2</sub>·sin q<sub>2</sub>
 M<sub>11</sub> = I<sub>1</sub>+I<sub>2</sub>+m<sub>1</sub>lc<sub>1</sub>²+m<sub>2</sub>(l<sub>1</sub>²+lc<sub>2</sub>²+2l<sub>1</sub>lc<sub>2</sub>cos q<sub>2</sub>)
 M<sub>12</sub> = I<sub>2</sub> + m<sub>2</sub>(lc<sub>2</sub>² + l<sub>1</sub>lc<sub>2</sub>cos q<sub>2</sub>)    M<sub>22</sub> = I<sub>2</sub> + m<sub>2</sub>lc<sub>2</sub>²
 C = [ −h·<span class="ov1">q</span><sub>2</sub>(2<span class="ov1">q</span><sub>1</sub>+<span class="ov1">q</span><sub>2</sub>) ,  h·<span class="ov1">q</span><sub>1</sub>² ]
 G<sub>1</sub> = (m<sub>1</sub>lc<sub>1</sub>+m<sub>2</sub>l<sub>1</sub>)·g·cos q<sub>1</sub> + m<sub>2</sub>lc<sub>2</sub>·g·cos(q<sub>1</sub>+q<sub>2</sub>)
 G<sub>2</sub> = m<sub>2</sub>lc<sub>2</sub>·g·cos(q<sub>1</sub>+q<sub>2</sub>)</div>
-      <p class="ck-warn">▶ 각도는 수평 기준 · 입력은 도 → rad 로 변환해서 계산 · 쉬운 설명은 6-1 동역학 참고</p></div>
+      <p class="ck-warn">▶ 각도는 수평 기준 · 입력은 도 → rad 로 변환해서 계산 · 쉬운 설명은 6-1 동역학 참고</p>
+<div class="iofile" style="margin-top:10px"><div class="bar2"><span>그림 · 2링크 — M 은 q<sub>2</sub> 에, G 는 q<sub>1</sub>·q<sub>1</sub>+q<sub>2</sub> 에 따라 변하고, C 는 속도가 있어야 생긴다</span></div><div style="padding:12px 14px">
+<svg viewBox="0 0 720 540" width="720" style="max-width:100%;height:auto" role="img" aria-label="2링크 수직 로봇의 M, C, G" font-family="var(--f-body)" font-size="14"><defs><marker id="ck_mcg2_ink" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto"><path d="M0,0 L10,5 L0,10 z" fill="var(--ink)"/></marker><marker id="ck_mcg2_muted" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto"><path d="M0,0 L10,5 L0,10 z" fill="var(--muted)"/></marker><marker id="ck_mcg2_q" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto"><path d="M0,0 L10,5 L0,10 z" fill="var(--plot-q)"/></marker><marker id="ck_mcg2_v" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto"><path d="M0,0 L10,5 L0,10 z" fill="var(--plot-v)"/></marker><marker id="ck_mcg2_a" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto"><path d="M0,0 L10,5 L0,10 z" fill="var(--plot-a)"/></marker><marker id="ck_mcg2_acc" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto"><path d="M0,0 L10,5 L0,10 z" fill="var(--accent)"/></marker></defs>
+<text x="20.0" y="26.0" fill="var(--ink)" font-size="15" text-anchor="start" font-weight="700" stroke="var(--surface)" stroke-width="4" paint-order="stroke" stroke-linejoin="round">공통 · 2링크 — 실전 12~14 로봇 (m<tspan baseline-shift="sub" font-size="72%">1</tspan> 2, m<tspan baseline-shift="sub" font-size="72%">2</tspan> 1, l<tspan baseline-shift="sub" font-size="72%">1</tspan> 1.0, l<tspan baseline-shift="sub" font-size="72%">2</tspan> 0.8, lc<tspan baseline-shift="sub" font-size="72%">1</tspan> 0.5, lc<tspan baseline-shift="sub" font-size="72%">2</tspan> 0.4)</text>
+<line x1="44.0" y1="340.0" x2="297.5" y2="340.0" stroke="var(--muted)" stroke-width="1.2" stroke-dasharray="5 5" stroke-linecap="round"/>
+<line x1="224.5" y1="245.0" x2="319.5" y2="245.0" stroke="var(--muted)" stroke-width="1.1" stroke-dasharray="2 4" stroke-linecap="round"/>
+<line x1="224.5" y1="245.0" x2="273.9" y2="216.5" stroke="var(--muted)" stroke-width="1.3" stroke-dasharray="6 4" stroke-linecap="round"/>
+<line x1="60.0" y1="340.0" x2="224.5" y2="245.0" stroke="var(--plot-q)" stroke-width="7" stroke-linecap="round"/>
+<line x1="224.5" y1="245.0" x2="263.9" y2="98.2" stroke="var(--plot-v)" stroke-width="7" stroke-linecap="round"/>
+<circle cx="60.0" cy="340.0" r="8" fill="var(--surface)" stroke="var(--ink)" stroke-width="2"/>
+<circle cx="224.5" cy="245.0" r="7" fill="var(--surface)" stroke="var(--ink)" stroke-width="2"/>
+<circle cx="263.9" cy="98.2" r="5" fill="var(--ink)" stroke="var(--ink)" stroke-width="2"/>
+<circle cx="142.3" cy="292.5" r="6" fill="var(--accent)" stroke="var(--ink)" stroke-width="2"/>
+<line x1="142.3" y1="292.5" x2="142.3" y2="332.5" stroke="var(--plot-a)" stroke-width="2.4" marker-end="url(#ck_mcg2_a)" stroke-linecap="round"/>
+<text x="150.3" y="318.5" fill="var(--plot-a)" font-size="12" text-anchor="start" font-weight="700" stroke="var(--surface)" stroke-width="4" paint-order="stroke" stroke-linejoin="round">m<tspan baseline-shift="sub" font-size="72%">1</tspan>·g</text>
+<circle cx="244.2" cy="171.6" r="6" fill="var(--accent)" stroke="var(--ink)" stroke-width="2"/>
+<line x1="244.2" y1="171.6" x2="244.2" y2="211.6" stroke="var(--plot-a)" stroke-width="2.4" marker-end="url(#ck_mcg2_a)" stroke-linecap="round"/>
+<text x="252.2" y="197.6" fill="var(--plot-a)" font-size="12" text-anchor="start" font-weight="700" stroke="var(--surface)" stroke-width="4" paint-order="stroke" stroke-linejoin="round">m<tspan baseline-shift="sub" font-size="72%">2</tspan>·g</text>
+<path d="M104.0,340.0 A44.0,44.0 0 0 0 98.1,318.0" fill="none" stroke="var(--plot-q)" stroke-width="2"/>
+<text x="119.9" y="328.0" fill="var(--plot-q)" font-size="13" text-anchor="middle" stroke="var(--surface)" stroke-width="4" paint-order="stroke" stroke-linejoin="round">q<tspan baseline-shift="sub" font-size="72%">1</tspan></text>
+<path d="M250.5,230.0 A30.0,30.0 0 0 0 232.3,216.0" fill="none" stroke="var(--plot-v)" stroke-width="2"/>
+<text x="267.8" y="233.3" fill="var(--plot-v)" font-size="13" text-anchor="middle" stroke="var(--surface)" stroke-width="4" paint-order="stroke" stroke-linejoin="round">q<tspan baseline-shift="sub" font-size="72%">2</tspan></text>
+<text x="66.0" y="380.0" fill="var(--muted)" font-size="12" text-anchor="start" stroke="var(--surface)" stroke-width="4" paint-order="stroke" stroke-linejoin="round">q<tspan baseline-shift="sub" font-size="72%">2</tspan> 는 1번 링크 연장선 기준</text>
+<text x="66.0" y="398.0" fill="var(--muted)" font-size="12" text-anchor="start" stroke="var(--surface)" stroke-width="4" paint-order="stroke" stroke-linejoin="round">2번 링크 방향 = q<tspan baseline-shift="sub" font-size="72%">1</tspan> + q<tspan baseline-shift="sub" font-size="72%">2</tspan></text>
+<text x="66.0" y="426.0" fill="var(--accent)" font-size="12" text-anchor="start" font-weight="600" stroke="var(--surface)" stroke-width="4" paint-order="stroke" stroke-linejoin="round">● 무게중심 (관절에서 lc<tspan baseline-shift="sub" font-size="72%">1</tspan>, lc<tspan baseline-shift="sub" font-size="72%">2</tspan>)</text>
+<line x1="420.0" y1="185.8" x2="690.0" y2="185.8" stroke="var(--line)" stroke-width="1" stroke-linecap="round"/>
+<line x1="420.0" y1="153.2" x2="690.0" y2="153.2" stroke="var(--line)" stroke-width="1" stroke-linecap="round"/>
+<line x1="420.0" y1="120.8" x2="690.0" y2="120.8" stroke="var(--line)" stroke-width="1" stroke-linecap="round"/>
+<line x1="420.0" y1="88.2" x2="690.0" y2="88.2" stroke="var(--line)" stroke-width="1" stroke-linecap="round"/>
+<line x1="420.0" y1="72.0" x2="420.0" y2="202.0" stroke="var(--line)" stroke-width="1" stroke-linecap="round"/>
+<line x1="487.5" y1="72.0" x2="487.5" y2="202.0" stroke="var(--line)" stroke-width="1" stroke-linecap="round"/>
+<line x1="555.0" y1="72.0" x2="555.0" y2="202.0" stroke="var(--line)" stroke-width="1" stroke-linecap="round"/>
+<line x1="622.5" y1="72.0" x2="622.5" y2="202.0" stroke="var(--line)" stroke-width="1" stroke-linecap="round"/>
+<line x1="690.0" y1="72.0" x2="690.0" y2="202.0" stroke="var(--line)" stroke-width="1" stroke-linecap="round"/>
+<line x1="420.0" y1="202.0" x2="690.0" y2="202.0" stroke="var(--ink)" stroke-width="1.5" stroke-linecap="round"/>
+<line x1="420.0" y1="72.0" x2="420.0" y2="202.0" stroke="var(--ink)" stroke-width="1.5" stroke-linecap="round"/>
+<text x="420.0" y="219.0" fill="var(--muted)" font-size="12" text-anchor="middle" stroke="var(--surface)" stroke-width="4" paint-order="stroke" stroke-linejoin="round">-180°</text>
+<text x="487.5" y="219.0" fill="var(--muted)" font-size="12" text-anchor="middle" stroke="var(--surface)" stroke-width="4" paint-order="stroke" stroke-linejoin="round">-90°</text>
+<text x="555.0" y="219.0" fill="var(--muted)" font-size="12" text-anchor="middle" stroke="var(--surface)" stroke-width="4" paint-order="stroke" stroke-linejoin="round">0°</text>
+<text x="622.5" y="219.0" fill="var(--muted)" font-size="12" text-anchor="middle" stroke="var(--surface)" stroke-width="4" paint-order="stroke" stroke-linejoin="round">90°</text>
+<text x="690.0" y="219.0" fill="var(--muted)" font-size="12" text-anchor="middle" stroke="var(--surface)" stroke-width="4" paint-order="stroke" stroke-linejoin="round">180°</text>
+<text x="413.0" y="189.8" fill="var(--muted)" font-size="12" text-anchor="end" stroke="var(--surface)" stroke-width="4" paint-order="stroke" stroke-linejoin="round">0</text>
+<text x="413.0" y="157.2" fill="var(--muted)" font-size="12" text-anchor="end" stroke="var(--surface)" stroke-width="4" paint-order="stroke" stroke-linejoin="round">1</text>
+<text x="413.0" y="124.8" fill="var(--muted)" font-size="12" text-anchor="end" stroke="var(--surface)" stroke-width="4" paint-order="stroke" stroke-linejoin="round">2</text>
+<text x="413.0" y="92.2" fill="var(--muted)" font-size="12" text-anchor="end" stroke="var(--surface)" stroke-width="4" paint-order="stroke" stroke-linejoin="round">3</text>
+<text x="416.0" y="62.0" fill="var(--ink)" font-size="13" text-anchor="start" stroke="var(--surface)" stroke-width="4" paint-order="stroke" stroke-linejoin="round">M (kg·m²)  ← q<tspan baseline-shift="sub" font-size="72%">2</tspan> 에 따라</text>
+<polyline points="420.0,150.7 424.5,150.5 429.0,150.1 433.5,149.4 438.0,148.4 442.5,147.2 447.0,145.7 451.5,144.0 456.0,142.0 460.5,139.9 465.0,137.6 469.5,135.2 474.0,132.7 478.5,130.1 483.0,127.4 487.5,124.7 492.0,121.9 496.5,119.2 501.0,116.6 505.5,114.1 510.0,111.6 514.5,109.4 519.0,107.3 523.5,105.3 528.0,103.6 532.5,102.1 537.0,100.9 541.5,99.9 546.0,99.2 550.5,98.8 555.0,98.6 559.5,98.8 564.0,99.2 568.5,99.9 573.0,100.9 577.5,102.1 582.0,103.6 586.5,105.3 591.0,107.3 595.5,109.4 600.0,111.6 604.5,114.1 609.0,116.6 613.5,119.2 618.0,121.9 622.5,124.7 627.0,127.4 631.5,130.1 636.0,132.7 640.5,135.2 645.0,137.6 649.5,139.9 654.0,142.0 658.5,144.0 663.0,145.7 667.5,147.2 672.0,148.4 676.5,149.4 681.0,150.1 685.5,150.5 690.0,150.7" fill="none" stroke="var(--plot-q)" stroke-width="2.8" stroke-linejoin="round" stroke-linecap="round"/>
+<polyline points="420.0,191.8 424.5,191.7 429.0,191.5 433.5,191.2 438.0,190.7 442.5,190.1 447.0,189.3 451.5,188.5 456.0,187.5 460.5,186.5 465.0,185.3 469.5,184.1 474.0,182.8 478.5,181.5 483.0,180.2 487.5,178.8 492.0,177.5 496.5,176.1 501.0,174.8 505.5,173.5 510.0,172.3 514.5,171.2 519.0,170.1 523.5,169.2 528.0,168.3 532.5,167.6 537.0,166.9 541.5,166.5 546.0,166.1 550.5,165.9 555.0,165.8 559.5,165.9 564.0,166.1 568.5,166.5 573.0,166.9 577.5,167.6 582.0,168.3 586.5,169.2 591.0,170.1 595.5,171.2 600.0,172.3 604.5,173.5 609.0,174.8 613.5,176.1 618.0,177.5 622.5,178.8 627.0,180.2 631.5,181.5 636.0,182.8 640.5,184.1 645.0,185.3 649.5,186.5 654.0,187.5 658.5,188.5 663.0,189.3 667.5,190.1 672.0,190.7 676.5,191.2 681.0,191.5 685.5,191.7 690.0,191.8" fill="none" stroke="var(--plot-v)" stroke-width="2.4" stroke-linejoin="round" stroke-linecap="round"/>
+<line x1="420.0" y1="178.8" x2="690.0" y2="178.8" stroke="var(--plot-a)" stroke-width="2.4" stroke-dasharray="6 4" stroke-linecap="round"/>
+<text x="555.0" y="90.6" fill="var(--plot-q)" font-size="12" text-anchor="middle" font-weight="700" stroke="var(--surface)" stroke-width="4" paint-order="stroke" stroke-linejoin="round">M<tspan baseline-shift="sub" font-size="72%">11</tspan> 최대 2.68 (팔을 폄)</text>
+<text x="423.0" y="142.7" fill="var(--plot-q)" font-size="12" text-anchor="start" font-weight="600" stroke="var(--surface)" stroke-width="4" paint-order="stroke" stroke-linejoin="round">1.08 (접힘)</text>
+<text x="510.0" y="164.3" fill="var(--plot-v)" font-size="12" text-anchor="middle" font-weight="700" stroke="var(--surface)" stroke-width="4" paint-order="stroke" stroke-linejoin="round">M<tspan baseline-shift="sub" font-size="72%">12</tspan></text>
+<text x="687.0" y="172.8" fill="var(--plot-a)" font-size="12" text-anchor="end" font-weight="700" stroke="var(--surface)" stroke-width="4" paint-order="stroke" stroke-linejoin="round">M<tspan baseline-shift="sub" font-size="72%">22</tspan> = 0.213 상수</text>
+<text x="690.0" y="238.0" fill="var(--ink)" font-size="13" text-anchor="end" stroke="var(--surface)" stroke-width="4" paint-order="stroke" stroke-linejoin="round">q<tspan baseline-shift="sub" font-size="72%">2</tspan> (°)</text>
+<line x1="420.0" y1="410.0" x2="690.0" y2="410.0" stroke="var(--line)" stroke-width="1" stroke-linecap="round"/>
+<line x1="420.0" y1="363.8" x2="690.0" y2="363.8" stroke="var(--line)" stroke-width="1" stroke-linecap="round"/>
+<line x1="420.0" y1="317.7" x2="690.0" y2="317.7" stroke="var(--line)" stroke-width="1" stroke-linecap="round"/>
+<line x1="420.0" y1="290.0" x2="420.0" y2="410.0" stroke="var(--line)" stroke-width="1" stroke-linecap="round"/>
+<line x1="487.5" y1="290.0" x2="487.5" y2="410.0" stroke="var(--line)" stroke-width="1" stroke-linecap="round"/>
+<line x1="555.0" y1="290.0" x2="555.0" y2="410.0" stroke="var(--line)" stroke-width="1" stroke-linecap="round"/>
+<line x1="622.5" y1="290.0" x2="622.5" y2="410.0" stroke="var(--line)" stroke-width="1" stroke-linecap="round"/>
+<line x1="690.0" y1="290.0" x2="690.0" y2="410.0" stroke="var(--line)" stroke-width="1" stroke-linecap="round"/>
+<line x1="420.0" y1="410.0" x2="690.0" y2="410.0" stroke="var(--ink)" stroke-width="1.5" stroke-linecap="round"/>
+<line x1="420.0" y1="290.0" x2="420.0" y2="410.0" stroke="var(--ink)" stroke-width="1.5" stroke-linecap="round"/>
+<text x="420.0" y="427.0" fill="var(--muted)" font-size="12" text-anchor="middle" stroke="var(--surface)" stroke-width="4" paint-order="stroke" stroke-linejoin="round">-90°</text>
+<text x="487.5" y="427.0" fill="var(--muted)" font-size="12" text-anchor="middle" stroke="var(--surface)" stroke-width="4" paint-order="stroke" stroke-linejoin="round">-45°</text>
+<text x="555.0" y="427.0" fill="var(--muted)" font-size="12" text-anchor="middle" stroke="var(--surface)" stroke-width="4" paint-order="stroke" stroke-linejoin="round">0°</text>
+<text x="622.5" y="427.0" fill="var(--muted)" font-size="12" text-anchor="middle" stroke="var(--surface)" stroke-width="4" paint-order="stroke" stroke-linejoin="round">45°</text>
+<text x="690.0" y="427.0" fill="var(--muted)" font-size="12" text-anchor="middle" stroke="var(--surface)" stroke-width="4" paint-order="stroke" stroke-linejoin="round">90°</text>
+<text x="413.0" y="414.0" fill="var(--muted)" font-size="12" text-anchor="end" stroke="var(--surface)" stroke-width="4" paint-order="stroke" stroke-linejoin="round">0</text>
+<text x="413.0" y="367.8" fill="var(--muted)" font-size="12" text-anchor="end" stroke="var(--surface)" stroke-width="4" paint-order="stroke" stroke-linejoin="round">10</text>
+<text x="413.0" y="321.7" fill="var(--muted)" font-size="12" text-anchor="end" stroke="var(--surface)" stroke-width="4" paint-order="stroke" stroke-linejoin="round">20</text>
+<text x="690.0" y="446.0" fill="var(--ink)" font-size="13" text-anchor="end" stroke="var(--surface)" stroke-width="4" paint-order="stroke" stroke-linejoin="round">q<tspan baseline-shift="sub" font-size="72%">1</tspan> (°)  (q<tspan baseline-shift="sub" font-size="72%">2</tspan> = 0, 팔을 편 채)</text>
+<text x="416.0" y="280.0" fill="var(--ink)" font-size="13" text-anchor="start" stroke="var(--surface)" stroke-width="4" paint-order="stroke" stroke-linejoin="round">G (N·m)  ← 수평일수록 큼</text>
+<polyline points="420.0,410.0 424.5,404.3 429.0,398.6 433.5,393.0 438.0,387.4 442.5,381.9 447.0,376.4 451.5,371.1 456.0,365.8 460.5,360.7 465.0,355.7 469.5,350.8 474.0,346.1 478.5,341.6 483.0,337.3 487.5,333.2 492.0,329.2 496.5,325.6 501.0,322.1 505.5,318.9 510.0,315.9 514.5,313.2 519.0,310.7 523.5,308.6 528.0,306.7 532.5,305.0 537.0,303.7 541.5,302.7 546.0,301.9 550.5,301.5 555.0,301.3 559.5,301.5 564.0,301.9 568.5,302.7 573.0,303.7 577.5,305.0 582.0,306.7 586.5,308.6 591.0,310.7 595.5,313.2 600.0,315.9 604.5,318.9 609.0,322.1 613.5,325.6 618.0,329.2 622.5,333.2 627.0,337.3 631.5,341.6 636.0,346.1 640.5,350.8 645.0,355.7 649.5,360.7 654.0,365.8 658.5,371.1 663.0,376.4 667.5,381.9 672.0,387.4 676.5,393.0 681.0,398.6 685.5,404.3 690.0,410.0" fill="none" stroke="var(--plot-q)" stroke-width="2.8" stroke-linejoin="round" stroke-linecap="round"/>
+<polyline points="420.0,410.0 424.5,409.1 429.0,408.1 433.5,407.2 438.0,406.2 442.5,405.3 447.0,404.4 451.5,403.5 456.0,402.6 460.5,401.8 465.0,400.9 469.5,400.1 474.0,399.4 478.5,398.6 483.0,397.9 487.5,397.2 492.0,396.5 496.5,395.9 501.0,395.3 505.5,394.8 510.0,394.3 514.5,393.9 519.0,393.5 523.5,393.1 528.0,392.8 532.5,392.5 537.0,392.3 541.5,392.1 546.0,392.0 550.5,391.9 555.0,391.9 559.5,391.9 564.0,392.0 568.5,392.1 573.0,392.3 577.5,392.5 582.0,392.8 586.5,393.1 591.0,393.5 595.5,393.9 600.0,394.3 604.5,394.8 609.0,395.3 613.5,395.9 618.0,396.5 622.5,397.2 627.0,397.9 631.5,398.6 636.0,399.4 640.5,400.1 645.0,400.9 649.5,401.8 654.0,402.6 658.5,403.5 663.0,404.4 667.5,405.3 672.0,406.2 676.5,407.2 681.0,408.1 685.5,409.1 690.0,410.0" fill="none" stroke="var(--plot-v)" stroke-width="2.4" stroke-linejoin="round" stroke-linecap="round"/>
+<text x="555.0" y="293.3" fill="var(--plot-q)" font-size="12" text-anchor="middle" font-weight="700" stroke="var(--surface)" stroke-width="4" paint-order="stroke" stroke-linejoin="round">G<tspan baseline-shift="sub" font-size="72%">1</tspan> 최대 23.54</text>
+<text x="555.0" y="383.9" fill="var(--plot-v)" font-size="12" text-anchor="middle" font-weight="700" stroke="var(--surface)" stroke-width="4" paint-order="stroke" stroke-linejoin="round">G<tspan baseline-shift="sub" font-size="72%">2</tspan> 최대 3.924</text>
+<text x="20.0" y="484.0" fill="var(--ink)" font-size="12" text-anchor="start" font-weight="600" stroke="var(--surface)" stroke-width="4" paint-order="stroke" stroke-linejoin="round">M : M<tspan baseline-shift="sub" font-size="72%">11</tspan>·M<tspan baseline-shift="sub" font-size="72%">12</tspan>·M<tspan baseline-shift="sub" font-size="72%">22</tspan> 의 2×2 행렬, cos q<tspan baseline-shift="sub" font-size="72%">2</tspan> 만 들어 있다 → 팔을 펼수록(q<tspan baseline-shift="sub" font-size="72%">2</tspan> = 0) 관절 1 을 돌리기 무겁다</text>
+<text x="20.0" y="506.0" fill="var(--ink)" font-size="12" text-anchor="start" font-weight="600" stroke="var(--surface)" stroke-width="4" paint-order="stroke" stroke-linejoin="round">C : h = m<tspan baseline-shift="sub" font-size="72%">2</tspan>l<tspan baseline-shift="sub" font-size="72%">1</tspan>lc<tspan baseline-shift="sub" font-size="72%">2</tspan>·sin q<tspan baseline-shift="sub" font-size="72%">2</tspan> 에 관절 속도를 곱한 항 → 멈춰 있으면(속도 0) C = 0</text>
+<text x="20.0" y="528.0" fill="var(--ink)" font-size="12" text-anchor="start" font-weight="600" stroke="var(--surface)" stroke-width="4" paint-order="stroke" stroke-linejoin="round">G : 무게 × 수평 거리 → 관절 1 은 두 링크를 모두 들고(G<tspan baseline-shift="sub" font-size="72%">1</tspan> 큼), 관절 2 는 2번 링크만 든다</text>
+</svg>
+</div></div>
+</div>
     <div class="ck-card ck-wide"><h4><b>12</b>PD + 중력 보상</h4>
       <div class="formula">PD   : τ = Kp(q_d − q) − Kd·<span class="ov1">q</span>        정지 시 e = G(q)/Kp ≠ 0 (처짐)
 PD+G : τ = Kp(q_d − q) − Kd·<span class="ov1">q</span> + G(q)   정지 시 e = 0</div>
